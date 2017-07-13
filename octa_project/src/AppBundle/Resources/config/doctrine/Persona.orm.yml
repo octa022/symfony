@@ -1,0 +1,51 @@
+AppBundle\Entity\Persona:
+    type: entity
+    table: persona
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        apellido:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    #··················· Nueva Relacion (P1)         
+    oneToMany:
+        usuario:
+            targetEntity: Usuario
+            mappedBy: persona
+            cascade: ["persist"]
+        telefono:
+            targetEntity: Telefono
+            mappedBy: persona
+            cascade: ["persist"]
+        persCurs:
+            targetEntity: PersCurs
+            mappedBy: persona
+            cascade: ["persist"]
+
+        
+    # tambien Persona.php
+    #··················· Nueva Relacion (P1)         
+    #oneToMany:
+    #    usuario:
+    #        targetEntity: usuario
+    #        mappedBy: persona
+    #        cascade: ["persist"]
+    # tambien Persona.php  
+
+    lifecycleCallbacks: {  }

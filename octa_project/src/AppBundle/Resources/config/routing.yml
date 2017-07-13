@@ -1,0 +1,29 @@
+app_homepage:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
+
+# Login    
+login:
+    path: /login
+    defaults: { _controller: AppBundle:Usuario:login }
+
+login_check:
+    path: /login_check
+ 
+logout:
+    path: /logout
+
+# Cursos
+Blog_index_cursos:
+    path: /cursos
+    defaults: { _controller: AppBundle:Cursos:index }
+
+Blog_add_cursos:
+    path: /cursos/add
+    defaults: { _controller: AppBundle:Cursos:add }
+
+Blog_delele_cursos:
+    path: /cursos/delete/{id}
+    defaults: { _controller: AppBundle:Cursos:delete }
+
+

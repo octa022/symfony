@@ -1,0 +1,41 @@
+AppBundle\Entity\Cursos:
+    type: entity
+    table: cursos
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombreCurso:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: nombre_curso
+        tutor:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        descripcion:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+    #··················· Nueva Relacion (P1)         
+    oneToMany:
+        persCurs:
+            targetEntity: PersCurs
+            mappedBy: curso
+            cascade: ["persist"]
+
+
+    lifecycleCallbacks: {  }

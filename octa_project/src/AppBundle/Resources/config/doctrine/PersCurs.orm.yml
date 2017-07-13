@@ -1,0 +1,41 @@
+AppBundle\Entity\PersCurs:
+    type: entity
+    table: pers_curs
+    indexes:
+        fk_pers_curs_persona:
+            columns:
+                - persona_id
+        fk_pers_curs_curso:
+            columns:
+                - cursos_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        cursos:
+            targetEntity: Cursos
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                cursos_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        persona:
+            targetEntity: Persona
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: persCurs ###null
+            joinColumns:
+                persona_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

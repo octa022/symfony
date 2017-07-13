@@ -1,0 +1,7 @@
+AppBundle\Entity\Cursos:
+    properties:
+        nombreCurso:
+            - NotBlank: {message:"No puede estar vacio"}
+            - Length:
+                  min: 3
+                  minMessage: "Debe tener mas de 3 caracteres"

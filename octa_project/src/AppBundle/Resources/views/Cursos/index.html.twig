@@ -1,0 +1,39 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+	
+	<div class="col-lg-4">
+
+		<h2>Todos los Cursos</h2>
+		<hr/>
+		{% for message in app.session.flashbag().get('status') %}
+			<div class="alert alert-success">{{ message }}</div>
+		{% endfor %}
+		<table class="table table-bordered">
+			{% for curso in cursos %}
+				<tr>
+					<td>{{curso.nombreCurso}}</td>
+					<td>{{curso.tutor}}</td>
+					<td>{{curso.descripcion}}</td>
+					<td>
+						{% if curso|length == 0 %} 
+							<a href="{{path("Blog_delele_cursos",{"id":curso.id})}}" class="btn btn-danger">
+          					<span class="glyphicon glyphicon-remove"></span> Borrar 
+        					</a>
+        				{% else %}
+        					ojo revisar 73
+        				{% endif %}
+						 	
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Otro Curso</a>
+		<hr/>
+	</div>
+
+
+	<div class="clearfix"></div>
+
+
+{% endblock %}

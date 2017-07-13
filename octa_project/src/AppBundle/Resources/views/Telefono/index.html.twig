@@ -1,0 +1,27 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+	
+	<div class="col-lg-4">
+
+		<h2>Telefonos del Usuario</h2>
+		<hr/>
+		{% for message in app.session.flashbag().get('status') %}
+			<div class="alert alert-success">{{ message }}</div>
+		{% endfor %}
+		<table class="table table-bordered">
+			{% for telefono in telefonos %}
+				<tr>
+					<th>{{telefono.numero}}</th>
+				</tr>
+			{% endfor %}
+		</table>
+		<a href="{{path("Blog_add_telefonos")}}" class="btn btn-success">Agregar Otro Numero</a>
+		<hr/>
+	</div>
+
+
+	<div class="clearfix"></div>
+
+
+{% endblock %}

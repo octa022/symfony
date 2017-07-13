@@ -1,0 +1,47 @@
+AppBundle\Entity\Usuario:
+    type: entity
+    table: usuario
+    uniqueConstraints:
+        persona_id:
+            columns:
+                - persona_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        user:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        role:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    manyToOne:
+        persona:
+            targetEntity: Persona
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: usuario ###
+            joinColumns:
+                persona_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
