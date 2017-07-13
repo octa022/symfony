@@ -26,4 +26,19 @@ Blog_delele_cursos:
     path: /cursos/delete/{id}
     defaults: { _controller: AppBundle:Cursos:delete }
 
+# Telefonos
+Blog_index_telefonos:
+    path: /telefonos
+    defaults: { _controller: AppBundle:Telefono:index }
 
+Blog_add_telefonos:
+    path: /telefonos/add
+    defaults: { _controller: AppBundle:Telefono:add }
+
+Blog_delele_telefonos:
+    path: /telefonos/delete/{id}
+    defaults: { _controller: AppBundle:Telefono:delete }
+
+Blog_edit_telefonos:
+    path: /telefonos/edit/{id}
+    defaults: { _controller: AppBundle:Telefono:edit }

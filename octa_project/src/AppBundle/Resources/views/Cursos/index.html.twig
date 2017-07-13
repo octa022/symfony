@@ -16,12 +16,12 @@
 					<td>{{curso.tutor}}</td>
 					<td>{{curso.descripcion}}</td>
 					<td>
-						{% if curso|length == 0 %} 
+						{% if curso.persCurs|length == 0 %} 
 							<a href="{{path("Blog_delele_cursos",{"id":curso.id})}}" class="btn btn-danger">
           					<span class="glyphicon glyphicon-remove"></span> Borrar 
         					</a>
         				{% else %}
-        					ojo revisar 73
+        					Creado por otro usuario
         				{% endif %}
 						 	
 					</td>

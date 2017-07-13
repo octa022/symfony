@@ -28,11 +28,11 @@ class Cursos
     private $descripcion;
 
     /************ Propiedad ************/
-    protected $persona;
+    protected $persCurs; 
        
     public function __construct()
     {
-        $this->persona = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->persCurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
     /********************************/ 
 
@@ -118,5 +118,13 @@ class Cursos
     {
         return $this->descripcion;
     }
+
+    /*Extraer Cursos de Una Persona*/
+    /***************************/ 
+    public function getPersCurs()
+    {
+        return $this->persCurs;
+    }
+    /***************************/ 
 }
 

@@ -23,7 +23,7 @@ AppBundle\Entity\PersCurs:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: null
+            inversedBy: persCurs ###null
             joinColumns:
                 cursos_id:
                     referencedColumnName: id

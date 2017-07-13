@@ -10,13 +10,34 @@
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
 		<table class="table table-bordered">
+			<tr>
+				<th>Telefono</th>
+				<th>Editar</th>
+				<th>Borar</th>
+			<tr>
 			{% for telefono in telefonos %}
+				
 				<tr>
-					<th>{{telefono.numero}}</th>
+					<td>{{telefono.numero}}</td>
+					<td>
+						<a href="{{path("Blog_edit_telefonos",{"id":telefono.id})}}" class="btn btn-warning">
+          					<span class="glyphicon glyphicon-edit"></span> Editar 
+					</td>
+					<td>
+						{% if telefono.persona|length == 0 %} 
+							<a href="{{path("Blog_delele_telefonos",{"id":telefono.id})}}" class="btn btn-danger">
+          					<span class="glyphicon glyphicon-remove"></span> Borrar 
+        					</a>
+        				{% else %}
+        					Creado por otro usuario
+        				{% endif %}
+						 	
+					</td>
 				</tr>
 			{% endfor %}
 		</table>
-		<a href="{{path("Blog_add_telefonos")}}" class="btn btn-success">Agregar Otro Numero</a>
+		<a href="{{path("Blog_add_telefonos")}}" class="btn btn-success">
+		<span class="glyphicon glyphicon-ok"></span>Agregar Otro Numero</a>
 		<hr/>
 	</div>
 

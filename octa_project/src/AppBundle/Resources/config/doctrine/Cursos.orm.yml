@@ -34,7 +34,7 @@ AppBundle\Entity\Cursos:
     oneToMany:
         persCurs:
             targetEntity: PersCurs
-            mappedBy: curso
+            mappedBy: cursos
             cascade: ["persist"]
 
 

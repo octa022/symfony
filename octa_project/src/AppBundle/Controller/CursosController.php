@@ -81,12 +81,12 @@ class CursosController extends Controller
         $curso_repo = $em->getRepository("AppBundle:Cursos");
         $curso=$curso_repo->find($id);
         # Borrar Curso
-        //var_dump(count($curso->getPersCurs()));
-        //if (count($curso->getPersCurs())==0)
-        //{
+        var_dump(count($curso->getPersCurs()));
+        if (count($curso->getPersCurs())==0)
+        {
             $em->remove($curso);
             $em->flush();
-        //}
+        }
         
         
         return $this->redirectToRoute("Blog_index_cursos");

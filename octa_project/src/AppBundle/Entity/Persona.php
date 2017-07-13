@@ -113,6 +113,7 @@ class Persona
     {
         return $this->usuario;
     }
+    /*Extraer Cursos de Una Persona*/
     /***************************/ 
     public function getPersCurs()
     {
