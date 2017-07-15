@@ -55,6 +55,8 @@ class TelefonoController extends Controller
                 {
                     $status = "Error, Intenta Nuevamente...!!!"; 
                 }
+                $this->session->getFlashBag()->add("status",$status); 
+                return $this->redirectToRoute("Blog_index_telefonos"); /*Redireccion*/ 
 
                 
             }
@@ -64,8 +66,8 @@ class TelefonoController extends Controller
             }
 
             /*SMS Inf*/
-            $this->session->getFlashBag()->add("status",$status); 
-            return $this->redirectToRoute("Blog_index_telefonos"); /*Redireccion*/ 
+            #$this->session->getFlashBag()->add("status",$status); 
+            #return $this->redirectToRoute("Blog_index_telefonos"); /*Redireccion*/ 
         }
 
         return $this->render('AppBundle:Telefono:add.html.twig', array(
