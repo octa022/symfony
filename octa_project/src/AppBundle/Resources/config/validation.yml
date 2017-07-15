@@ -1,12 +1,12 @@
 AppBundle\Entity\Usuario:
     properties:
         user:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 3
                   minMessage: "Su Usuario debe tener mas de 3 caracteres"
         password:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 4
                   minMessage: "Su Contrasea debe tener mas de 4 caracteres"
@@ -15,17 +15,17 @@ AppBundle\Entity\Usuario:
 AppBundle\Entity\Cursos:
     properties:
         nombreCurso:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 3
                   minMessage: "Debe tener mas de 3 caracteres"
         tutor:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 3
                   minMessage: "Debe tener mas de 3 caracteres"
         descripcion:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 3
                   minMessage: "Debe tener mas de 3 caracteres"
@@ -33,7 +33,7 @@ AppBundle\Entity\Cursos:
 AppBundle\Entity\Persona:
     properties:
         nombre:
-            - NotBlank: {message:"No puede estar vacio"}
+            - NotBlank: {message: "No puede estar vacio"}
             - Length:
                   min: 3
                   minMessage: "Debe tener mas de 3 caracteres"
@@ -46,6 +46,7 @@ AppBundle\Entity\Persona:
 AppBundle\Entity\Telefono:
     properties:
         numero:
+            - NotNull: {message: "No puede estar vacio"}
             - Type:
                 type: numeric
                 message: "Solo Numeros"

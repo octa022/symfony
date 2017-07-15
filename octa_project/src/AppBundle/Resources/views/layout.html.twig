@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf.8">
 		<title>
-			{% block title %} Title {% endblock %}
+			{% block title %} Symfony {% endblock %}
 			
 		</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
@@ -24,7 +24,9 @@
 			        <span class="icon-bar"></span>			
 			        <span class="icon-bar"></span>			
 			      </button>			
-			      <a class="navbar-brand" href="{{path("app_homepage")}}"> Proyecto </a>			
+			      <a class="navbar-brand" href="{{path("app_homepage")}}">
+			      	<img src="https://symfony.com/images/v5/logos/header-logo.svg" width="100" height="40" alt="Curso Symfony 3">
+			      </a>			
 			    </div>			
 			
 			    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -73,6 +75,10 @@
 			<hr/>
 			
 		</section>
+
+		<nav>
+		
+		</nav>
 		<footer>
 			Proyecto - Octavio Torres &copy;
 		</footer>
