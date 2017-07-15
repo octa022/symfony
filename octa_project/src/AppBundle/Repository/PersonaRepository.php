@@ -3,9 +3,10 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Telefono;
 use AppBundle\Entity\Persona;
 
+
 class PersonaRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function saveTelefono($nombre,$apellido,$telefono=null,$persona=null)
+	public function saveDatos($nombre,$apellido,$telefono=null,$persona=null)
 	{
 		$em=$this->getEntityManager();
 
@@ -20,7 +21,7 @@ class PersonaRepository extends \Doctrine\ORM\EntityRepository
 		}
 		else{}
 		//$telefono=
-
+		
 		$telefonos = new Telefono();
 		$telefonos->setPersona($persona);
 		$telefonos->setNumero($telefono);

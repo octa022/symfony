@@ -1,6 +1,7 @@
 AppBundle\Entity\Persona:
     type: entity
     table: persona
+    repositoryClass: AppBundle\Repository\PersonaRepository
     id:
         id:
             type: integer

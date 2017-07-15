@@ -103,16 +103,23 @@ class Persona
     }
 
     /*Extraer los Numeros de Una Persona*/
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+        return $this;
+    }
     public function getTelefono()
     {
         return $this->telefono;
     }
     /***************************/ 
     /*Extraer Usuario de Una Persona*/
+    
     public function getUsuario()
     {
         return $this->usuario;
     }
+    
     /*Extraer Cursos de Una Persona*/
     /***************************/ 
     public function getPersCurs()

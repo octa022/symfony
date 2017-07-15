@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Persona;
 use AppBundle\Form\PersonaType;
+//use AppBundle\Entity\Usuario;
 
 class PersonaController extends Controller
 {
@@ -26,7 +27,7 @@ class PersonaController extends Controller
         $form->handleRequest($request); /*Recoger del Formulario*/
 
         if($form->isSubmitted()) /*Validar*/
-        {
+        {   
             if ($form->isValid())
             {
                 $em=$this->getDoctrine()->getEntityManager();
@@ -35,9 +36,17 @@ class PersonaController extends Controller
                 $persona = new Persona();
                 $persona->setNombre($form->get("nombre")->getData());
                 $persona->setApellido($form->get("apellido")->getData());
+
+                //$persona->setTelefono($form->get("telefono")->getData());
                                 
                 $em->persist($persona);
                 $flush = $em->flush();
+
+                $persona_repo->saveDatos(
+                    $form->get("nombre")->getData(),
+                    $form->get("apellido")->getData(),
+                    $form->get("telefono")->getData()
+                );
 
                 if($flush==null){
                         $status = "Todo Excelente...!!!"; 

@@ -37,11 +37,16 @@
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		{{form_start(form)}}
-		{{form_end(form)}}
+
+		
+		{{form_start(formU)}}
+		{{form_end(formU)}}
+		
+				
 	</div>
 
-
+	
 	<div class="clearfix"></div>
+
 	
 {% endblock %}

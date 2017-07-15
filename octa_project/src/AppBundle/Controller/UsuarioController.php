@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\UsuarioType;
+use AppBundle\Entity\Persona;
+use AppBundle\Form\PersonaType;
 
 class UsuarioController extends Controller
 {
@@ -20,72 +22,63 @@ class UsuarioController extends Controller
                 
     public function loginAction(Request $request)
     {
+        #Login
         $authenticationUtils = $this->get("security.authentication_utils");
     	$error = $authenticationUtils->getLastAuthenticationError();
     	$lastUsername = $authenticationUtils->getLastUsername();
+        #####
+        #Registro
+        $persona = new Persona();
+        $usuario = new Usuario();
+        $formP = $this->createForm(PersonaType::class,$persona);
+        $formU = $this->createForm(UsuarioType::class,$usuario);
 
-        /*Formulario*/
-        $user = new Usuario();
-        $form = $this->createForm(UsuarioType::class,$user);
-
-        $form->handleRequest($request);
-        /*Comprobar si el formulario se envio*/
-        if($form->isSubmitted()) 
+        $formP->handleRequest($request);
+        $formU->handleRequest($request);
+        
+        if (($formP->isValid()) or ($formU->isValid()))    
         {
-            if ($form->isValid())   
+            $usuario = new Usuario();
+            $persona = new Persona();
+            $persona->setNombre($formP->get("nombre")->getData());
+            $persona->setApellido($formP->get("apellido")->getData());
+
+
+            $usuario->setUser($formU->get("user")->getData());
+            $usuario->setPassword($formU->get("password")->getData());
+            $usuario->setRole("ROLE_USER");
+            $usuario->setPersona();
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($usuario);
+            //$em->persist($persona);
+            $flush = $em->flush();
+            if($flush==null)
             {
-                #Chequeo para saber si un usuario esta repetido
-                $em=$this->getDoctrine()->getEntityManager();
-                $user_repo=$em->getRepository("AppBundle:Usuario");    
-                $user = $user_repo->findOneBy(array("user"=>$form->get("user")->getData()));
-                #Si el usuario no existe, crear usuario
-                if(count($user)==0) 
-                {
-                    $user = new Usuario();
-                    $user->setUser($form->get("user")->getData());
-
-                    /*cifrar contraseñas*/
-                    $factory = $this->get("security.encoder_factory");
-                    $encoder = $factory->getEncoder($user);
-                    $password = $encoder->encodePassword($form->get("password")->getData(),$user->getSalt());
-                    /*cifrar contraseñas*/
-
-                    $user->setPassword($password);
-                    $user->setRole("ROLE_USER");
-
-                    $em = $this->getDoctrine()->getEntityManager();
-                    $em->persist($user);
-                    $flush = $em->flush();
-                    if($flush==null)
-                    {
-                        $status = "Te has registrado!!!";
-                    }
-                    else
-                    {
-                        $status = "No te registraste De Forma Correcta";
-                    }
-                }
-                else
-                {
-                    $status = "Ya Existe el Usuario";
-                }
+                //$em->persist($persona);
+                //$flush = $em->flush();
+                //$em->persist($usuario);
+                //$flush = $em->flush();
+                $status = "Te has registrado!!!";
             }
             else
             {
-                $status = "No te registraste De Forma Correcta";
+                $status = "No te registraste De Forma Correcta, Intentalo Nuevamente.!";
             }
-
-            $this->session->getFlashBag()->add("status",$status);   
         }
-    
+        else
+        {
+            $status = "No te registraste De Forma Correcta";
+        }
 
-       
-        
+        $this->session->getFlashBag()->add("status",$status);   
+                
         //devolver la vista
         return $this->render('AppBundle:Usuario:login.html.twig', array(
             "error" => $error,
             "last_username" => $lastUsername,
-            "form" => $form->createView()
+            "formP" => $formP->createView(),
+            "formU" => $formU->createView(),
 
             
         ));   

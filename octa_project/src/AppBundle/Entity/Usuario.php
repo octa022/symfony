@@ -147,8 +147,10 @@ class Usuario implements UserInterface
      *
      * @return Usuario
      */
+
     //public function setPersona(\AppBundle\Entity\Persona $persona = null)
-    public function setPersona()
+    public function setPersona(\AppBundle\Entity\Persona $persona = null)
+    //public function setPersona()
     {
         $this->persona = $persona;
 

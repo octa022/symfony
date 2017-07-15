@@ -21,7 +21,7 @@ class UsuarioType extends AbstractType
             ->add('user',TextType::class, array("label"=>"Usuario","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ->add('password',PasswordType::class, array("label"=>"Contraseña","required"=>"required", "attr" =>array("class" => "form_password form-control")))
             //->add('role')
-            //->add('persona')
+            //->add('persona',TextType::class, array("label"=>"persona","required"=>"required", "attr" =>array("class" => "form_password form-control")))
             ->add('Guardar',SubmitType::class, array("attr" =>array("class" => "form_submit btn btn-success")))
         ;
     }
