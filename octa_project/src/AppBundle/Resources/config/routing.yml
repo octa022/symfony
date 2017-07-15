@@ -42,3 +42,7 @@ Blog_delele_telefonos:
 Blog_edit_telefonos:
     path: /telefonos/edit/{id}
     defaults: { _controller: AppBundle:Telefono:edit }
+
+Blog_add_persona:
+    path: /persona/add
+    defaults: { _controller: AppBundle:Persona:add }

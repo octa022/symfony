@@ -1,10 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-
-	{% if app.user ==null %}
-		{{dump(app.user)}}
-	{% endif %}
 	
 	{% if is_granted('ROLE_USER') %}
 		<strong>
