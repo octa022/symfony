@@ -81,4 +81,3 @@ class PersCurs
         return $this->persona;
     }
 }
-

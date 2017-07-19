@@ -30,12 +30,4 @@ AppBundle\Entity\Cursos:
             length: 65535
             options:
                 fixed: false
-    #··················· Nueva Relacion (P1)         
-    oneToMany:
-        persCurs:
-            targetEntity: PersCurs
-            mappedBy: cursos
-            cascade: ["persist"]
-
-
     lifecycleCallbacks: {  }

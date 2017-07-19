@@ -2,6 +2,10 @@ AppBundle\Entity\Persona:
     type: entity
     table: persona
     repositoryClass: AppBundle\Repository\PersonaRepository
+    indexes:
+        usuario_id:
+            columns:
+                - usuario_id
     id:
         id:
             type: integer
@@ -24,12 +28,19 @@ AppBundle\Entity\Persona:
             length: 255
             options:
                 fixed: false
-    #··················· Nueva Relacion (P1)         
-    oneToMany:
+    manyToOne:
         usuario:
             targetEntity: Usuario
-            mappedBy: persona
-            cascade: ["persist"]
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    #··················· Nueva Relacion (P1)         
+    oneToMany:
         telefono:
             targetEntity: Telefono
             mappedBy: persona
@@ -38,15 +49,4 @@ AppBundle\Entity\Persona:
             targetEntity: PersCurs
             mappedBy: persona
             cascade: ["persist"]
-
-        
-    # tambien Persona.php
-    #··················· Nueva Relacion (P1)         
-    #oneToMany:
-    #    usuario:
-    #        targetEntity: usuario
-    #        mappedBy: persona
-    #        cascade: ["persist"]
-    # tambien Persona.php  
-
     lifecycleCallbacks: {  }

@@ -1,10 +1,6 @@
 AppBundle\Entity\Usuario:
     type: entity
     table: usuario
-    uniqueConstraints:
-        persona_id:
-            columns:
-                - persona_id
     id:
         id:
             type: integer
@@ -33,15 +29,9 @@ AppBundle\Entity\Usuario:
             length: 255
             options:
                 fixed: false
-    manyToOne:
+    oneToMany:              #---
         persona:
             targetEntity: Persona
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: usuario ###
-            joinColumns:
-                persona_id:
-                    referencedColumnName: id
-            orphanRemoval: false
+            mappedBy: usuario
+            cascade: ["persist"]
     lifecycleCallbacks: {  }

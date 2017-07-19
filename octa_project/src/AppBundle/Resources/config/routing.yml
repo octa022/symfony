@@ -43,6 +43,11 @@ Blog_edit_telefonos:
     path: /telefonos/edit/{id}
     defaults: { _controller: AppBundle:Telefono:edit }
 
+# Persona
 Blog_add_persona:
     path: /persona/add
     defaults: { _controller: AppBundle:Persona:add }
+
+Blog_index_persona:
+    path: /persona
+    defaults: { _controller: AppBundle:Persona:index }

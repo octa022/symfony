@@ -4,7 +4,8 @@
 	
 	{% if is_granted('ROLE_USER') %}
 		<strong>
-			Eres Usuario Normal
+			<h1>Bienvenido {{app.user.user}}</h1>
+			<meta http-equiv="refresh" content="1;URL={{path("app_homepage")}}" />
 		</strong>
 	{% endif %}
 
@@ -31,21 +32,7 @@
 		</form>
 	</div>
 	
-	<div class="col-lg-4">
-		<h2>Registrate</h2>
-		<hr/>
-		{% for message in app.session.flashbag().get('status') %}
-			<div class="alert alert-success">{{ message }}</div>
-		{% endfor %}
-
 		
-		{{form_start(formU)}}
-		{{form_end(formU)}}
-		
-				
-	</div>
-
-	
 	<div class="clearfix"></div>
 
 	

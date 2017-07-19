@@ -64,7 +64,9 @@ class Telefono
      *
      * @return Telefono
      */
-    public function setPersona(\AppBundle\Entity\Persona $persona = null)
+    //public function setPersona(\AppBundle\Entity\Persona $persona = null)
+    //public function setPersona(\AppBundle\Entity\Persona $persona = null)
+    public function setPersona($persona)
     {
         $this->persona = $persona;
 
@@ -81,4 +83,3 @@ class Telefono
         return $this->persona;
     }
 }
-

@@ -34,16 +34,17 @@
 			      
 			      <ul class="nav navbar-nav">
 			      	{% block menu %}	
-			      	<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-			        <li><a href="#">Link</a></li>
+			      	<li class="active"><a href="{{path("Blog_index_persona")}}">Personas<span class="sr-only">(current)</span></a></li>
+			    <!--    <li><a href="#">Link</a></li> -->
 			        {% endblock %}
 			      </ul>			
 			      
 			      <ul class="nav navbar-nav navbar-right">	
 			      	<li><a href="#">
 			      		{% if app.user !=null %}	
-							Saludos {{app.user.user}}
+							Saludos {{app.user.user}}  
 						{% endif %}
+
 						</a>
 			      	</li>
 
@@ -52,6 +53,7 @@
 			          <ul class="dropdown-menu">
 			            {% if app.user ==null %}	
 							<li><a href="{{path("login")}}">Entrar</a></li>
+							<li><a href="{{path("Blog_add_persona")}}">Registrate</a></li>
 						{% else %}
 							<li><a href="{{path("Blog_index_cursos")}}">Cursos</a></li>
 							<li><a href="{{path("Blog_index_telefonos")}}">Telefonos</a></li>
@@ -69,6 +71,7 @@
 			
 		</header>
 		<section id="content">
+			
 			{% block content %}	
 			Bloque de Contenido
 			{% endblock %}

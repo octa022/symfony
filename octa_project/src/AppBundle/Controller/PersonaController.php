@@ -7,8 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Persona;
-use AppBundle\Form\PersonaType;
-//use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Telefono;
+use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Cursos;
+use AppBundle\Entity\PersCurs;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PersonaController extends Controller
 {
@@ -17,61 +24,124 @@ class PersonaController extends Controller
     public function __construct(){
         $this->session=new Session();
     }
+
+    public function indexAction(){
+
+        $em=$this->getDoctrine()->getEntityManager();
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $personas = $persona_repo->findAll(); /*Regresa todos los telefonos*/
+
+        return $this->render('AppBundle:Persona:index.html.twig', array(
+            "personas" => $personas
+        ));
+
+    }
     
     public function addAction(Request $request)
     {
-        /*Formulario*/
+        $user = new Usuario();
         $persona = new Persona();
-        $form = $this->createForm(PersonaType::class,$persona);
+        $telefono = new Telefono();
+        $cursos = new Cursos();
+        
+        $form = $this->createFormBuilder()
+            ->add('nombre',TextType::class, array("label"=>"Nombre","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('apellido',TextType::class, array("label"=>"Apellido","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('user',TextType::class, array("label"=>"Usuario","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('password',PasswordType::class, array("label"=>"Contraseña","required"=>"required", "attr" =>array("class" => "form_password form-control")))
+            ->add('numero',TextType::class, array("label"=>"Telefono","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('nombreCurso',TextType::class, array("label"=>"Curso","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('tutor',TextType::class, array("label"=>"Tutor","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('descripcion',TextareaType::class, array("label"=>"Descripcion","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('Guardar',SubmitType::class, array("attr" =>array("class" => "form_submit btn btn-success")))
+            ->getForm()
+        ;
 
-        $form->handleRequest($request); /*Recoger del Formulario*/
 
-        if($form->isSubmitted()) /*Validar*/
-        {   
-            if ($form->isValid())
+
+        $form->handleRequest($request);
+        /*Comprobar si el formulario se envio*/
+        if($form->isSubmitted()) 
+        {
+            if ($form->isValid())   
             {
+                #Chequeo para saber si un usuario esta repetido
                 $em=$this->getDoctrine()->getEntityManager();
-                $persona_repo =$em->getRepository("AppBundle:Persona");
-                               
-                $persona = new Persona();
-                $persona->setNombre($form->get("nombre")->getData());
-                $persona->setApellido($form->get("apellido")->getData());
+                $user_repo=$em->getRepository("AppBundle:Usuario");    
+                $user = $user_repo->findOneBy(array("user"=>$form->get("user")->getData()));
+                #Si el usuario no existe, crear usuario
+                if(count($user)==0) 
+                {
+                    $user = new Usuario();
+                    $user->setUser($form->get("user")->getData());
 
-                //$persona->setTelefono($form->get("telefono")->getData());
-                                
-                $em->persist($persona);
-                $flush = $em->flush();
+                    /*cifrar contraseñas*/
+                    $factory = $this->get("security.encoder_factory");
+                    $encoder = $factory->getEncoder($user);
+                    $password = $encoder->encodePassword($form->get("password")->getData(),$user->getSalt());
+                    /*cifrar contraseñas*/
 
-                $persona_repo->saveDatos(
-                    $form->get("nombre")->getData(),
-                    $form->get("apellido")->getData(),
-                    $form->get("telefono")->getData()
-                );
+                    $user->setPassword($password);
+                    $user->setRole("ROLE_USER");
 
-                if($flush==null){
-                        $status = "Todo Excelente...!!!"; 
+                    #Persona
+                    $persona = new Persona();
+                    $persona->setUsuario($user);
+                    $persona->setNombre($form->get("nombre")->getData());
+                    $persona->setApellido($form->get("apellido")->getData());
+                    
+                    # Telefono
+                    $telefono = new Telefono();
+                    $telefono->setPersona($persona);
+                    $telefono->setNumero($form->get("numero")->getData());
+                    
+                    # Cursos
+                                       
+                    $cursos = new Cursos();
+                    $cursos->setNombreCurso($form->get("nombreCurso")->getData());
+                    $cursos->setTutor($form->get("tutor")->getData());
+                    $cursos->setDescripcion($form->get("descripcion")->getData());
+
+                    $perscurs= new PersCurs();
+                    $perscurs->setPersona($persona);
+                    $perscurs->setCursos($cursos);
+
+                    #############3
+
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($user);
+                    $em->persist($persona);
+                    $em->persist($telefono);
+                    $em->persist($cursos);
+                    $em->persist($perscurs);
+
+                    $flush = $em->flush();
+                    if($flush==null)
+                    {
+                        $status = "Te has registrado!!!";
+                    }
+                    else
+                    {
+                        $status = "No te registraste De Forma Correcta";
+                    }
+                    return $this->redirectToRoute("Blog_index_persona"); /*Redireccion*/ 
                 }
                 else
                 {
-                    $status = "Error, Intenta Nuevamente...!!!"; 
+                    $status = "Ya Existe el Usuario";
                 }
-                
             }
             else
             {
-                $status = "Rellenar Correctamente...!!!"; 
+                $status = "No te registraste De Forma Correcta";
             }
 
-            /*SMS Inf*/
-            $this->session->getFlashBag()->add("status",$status);  
+            $this->session->getFlashBag()->add("status",$status);   
         }
-
+        
         return $this->render('AppBundle:Persona:add.html.twig', array(
             "form" => $form->createView() 
         ));
     }
-        
-
-
 
 }

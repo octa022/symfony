@@ -22,27 +22,38 @@ class Persona
      */
     private $apellido;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $telefono;
 
-    /************ Propiedad ************/
-    protected $usuario;
-    protected $telefono;
-    protected $persCurs;
-    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $persCurs;
+
+    /**
+     * @var \AppBundle\Entity\Usuario
+     */
+    private $usuario;
+
+    #protected $telefono;
+    #protected $persCurs;
+
+    /**
+     * Constructor
+     */
+
     public function __construct()
     {
         $this->telefono = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
         $this->persCurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    /********************************/
-    //protected $usuario;
 
-    //public function __construct()
-    //{
-    //    $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
-    //}
-    /********************************/
-
+    #public function __toString()
+    #{
+    #    return $this->nombre;
+    #}
 
     /**
      * Get id
@@ -102,30 +113,104 @@ class Persona
         return $this->apellido;
     }
 
-    /*Extraer los Numeros de Una Persona*/
+    /**
+     * Add telefono
+     *
+     * @param \AppBundle\Entity\Telefono $telefono
+     *
+     * @return Persona
+     */
+    public function addTelefono(\AppBundle\Entity\Telefono $telefono)
+    {
+        $this->telefono[] = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Remove telefono
+     *
+     * @param \AppBundle\Entity\Telefono $telefono
+     */
+    public function removeTelefono(\AppBundle\Entity\Telefono $telefono)
+    {
+        $this->telefono->removeElement($telefono);
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+
     public function setTelefono($telefono)
     {
         $this->telefono = $telefono;
+
         return $this;
     }
+
     public function getTelefono()
     {
         return $this->telefono;
     }
-    /***************************/ 
-    /*Extraer Usuario de Una Persona*/
-    
-    public function getUsuario()
+
+    /**
+     * Add persCur
+     *
+     * @param \AppBundle\Entity\PersCurs $persCur
+     *
+     * @return Persona
+     */
+    public function addPersCur(\AppBundle\Entity\PersCurs $persCur)
     {
-        return $this->usuario;
+        $this->persCurs[] = $persCur;
+
+        return $this;
     }
-    
-    /*Extraer Cursos de Una Persona*/
-    /***************************/ 
+
+    /**
+     * Remove persCur
+     *
+     * @param \AppBundle\Entity\PersCurs $persCur
+     */
+    public function removePersCur(\AppBundle\Entity\PersCurs $persCur)
+    {
+        $this->persCurs->removeElement($persCur);
+    }
+
+    /**
+     * Get persCurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
     public function getPersCurs()
     {
         return $this->persCurs;
     }
-    /***************************/ 
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return Persona
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
 }
 

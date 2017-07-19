@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Telefono;
 use AppBundle\Form\TelefonoType;
 
+
 class TelefonoController extends Controller
 {
     private $session;
@@ -45,6 +46,10 @@ class TelefonoController extends Controller
                
                 $telefono = new Telefono();
                 $telefono->setNumero($form->get("numero")->getData());
+
+                //$persona=$this->$telefono->getPersona();
+                //$telefono->setPersona($telefono->getPersona());
+                //$telefono->setPersona();
                 
                 $em->persist($telefono);
                 $flush = $em->flush();

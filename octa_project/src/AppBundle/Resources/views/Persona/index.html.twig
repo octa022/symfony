@@ -1,0 +1,38 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+	<div class= "container">
+	<div class="col-lg-4">
+
+		<h2>Personas</h2>
+		<hr/>
+		{% for message in app.session.flashbag().get('status') %}
+			<div class="alert alert-success">{{ message }}</div>
+		{% endfor %}
+		<table class="table table-bordered">
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				
+				
+			<tr>
+			{% for persona in personas %}
+				
+				<tr>
+
+					<td>{{persona.nombre}}</td>
+					<td>{{persona.apellido}}</td>
+									
+				</tr>
+			{% endfor %}
+		</table>
+		
+		<hr/>
+	</div>
+	</div>
+
+
+	<div class="clearfix"></div>
+
+
+{% endblock %}

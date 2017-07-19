@@ -27,7 +27,7 @@ AppBundle\Entity\Telefono:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: telefono ###
+            inversedBy: telefono
             joinColumns:
                 persona_id:
                     referencedColumnName: id

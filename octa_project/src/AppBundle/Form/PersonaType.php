@@ -24,7 +24,7 @@ class PersonaType extends AbstractType
             ##
             ->add('telefono',TextType::class, array("label"=>"Telefono","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ##
-            //->add('usuario',TextType::class, array("label"=>"usuario","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('usuario',TextType::class, array("label"=>"usuario","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             //->add('password',TextType::class, array("label"=>"contraseña","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ###
             ->add('Guardar',SubmitType::class, array("attr" =>array("class" => "form_submit btn btn-success")))

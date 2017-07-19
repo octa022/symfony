@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * Usuario
  */
@@ -30,9 +31,19 @@ class Usuario implements UserInterface
     private $password;
 
     /**
-     * @var \AppBundle\Entity\Persona
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $persona;
+
+    protected $usuario;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->persona = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /*  Autenticacion login  */
     public function getUsername() 
@@ -57,6 +68,10 @@ class Usuario implements UserInterface
 
     /*Fin Autenticacion */
 
+    #public function __toString()
+    #{
+    #    return $this->user;
+    #}
 
     /**
      * Get id
@@ -141,26 +156,33 @@ class Usuario implements UserInterface
     }
 
     /**
-     * Set persona
+     * Add persona
      *
      * @param \AppBundle\Entity\Persona $persona
      *
      * @return Usuario
      */
-
-    //public function setPersona(\AppBundle\Entity\Persona $persona = null)
-    public function setPersona(\AppBundle\Entity\Persona $persona = null)
-    //public function setPersona()
+    public function addPersona(\AppBundle\Entity\Persona $persona)
     {
-        $this->persona = $persona;
+        $this->persona[] = $persona;
 
         return $this;
     }
 
     /**
+     * Remove persona
+     *
+     * @param \AppBundle\Entity\Persona $persona
+     */
+    public function removePersona(\AppBundle\Entity\Persona $persona)
+    {
+        $this->persona->removeElement($persona);
+    }
+
+    /**
      * Get persona
      *
-     * @return \AppBundle\Entity\Persona
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPersona()
     {
