@@ -1,6 +1,5 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-{{dump()}}
 	<div class="col-lg-4">
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
