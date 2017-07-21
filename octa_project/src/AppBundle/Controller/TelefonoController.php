@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Telefono;
+//use AppBundle\Entity\Persona;
 use AppBundle\Form\TelefonoType;
 
 
@@ -22,10 +23,15 @@ class TelefonoController extends Controller
 
         $em=$this->getDoctrine()->getEntityManager();
         $telf_repo = $em->getRepository("AppBundle:Telefono");
-        $telefonos = $telf_repo->findAll(); /*Regresa todos los telefonos*/
+        $telefonos = $telf_repo->findAll();
 
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $personas = $persona_repo->findAll();
+
+       
         return $this->render('AppBundle:Telefono:index.html.twig', array(
-            "telefonos" => $telefonos
+            "telefonos" => $telefonos,
+            "personas" => $personas
         ));
 
     }
@@ -34,6 +40,10 @@ class TelefonoController extends Controller
     {
         /*Formulario*/
         $telefono = new Telefono();
+
+        $em=$this->getDoctrine()->getEntityManager();
+
+        
         $form = $this->createForm(TelefonoType::class,$telefono);
 
         $form->handleRequest($request); /*Recoger del Formulario*/
@@ -44,13 +54,24 @@ class TelefonoController extends Controller
             {
                 $em=$this->getDoctrine()->getEntityManager();
                
+               
+                #Id de Persona Actual
+                $user = $this->getUser()->getId(); 
+                $persona_repo = $em->getRepository("AppBundle:Persona");
+                $persona = $persona_repo->findOneByUsuario($user);
+
+                //$persona =$personas; 
+
+                //echo $persona;
+                //die();                
+
                 $telefono = new Telefono();
+                $telefono->setPersona($persona);
                 $telefono->setNumero($form->get("numero")->getData());
 
-                //$persona=$this->$telefono->getPersona();
-                //$telefono->setPersona($telefono->getPersona());
-                //$telefono->setPersona();
                 
+
+                                            
                 $em->persist($telefono);
                 $flush = $em->flush();
                 if($flush==null){
@@ -74,9 +95,15 @@ class TelefonoController extends Controller
             #$this->session->getFlashBag()->add("status",$status); 
             #return $this->redirectToRoute("Blog_index_telefonos"); /*Redireccion*/ 
         }
+        
+        
+        //echo $this->getPersona()->getId();
+
+        
+       
 
         return $this->render('AppBundle:Telefono:add.html.twig', array(
-            "form" => $form->createView() 
+            "form" => $form->createView(),             
         )); 
     }
 

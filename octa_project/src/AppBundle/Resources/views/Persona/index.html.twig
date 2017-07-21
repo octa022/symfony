@@ -1,38 +1,104 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-	<div class= "container">
-	<div class="col-lg-4">
+<div class= "container">
+    <div class="col-lg-4">
 
-		<h2>Personas</h2>
-		<hr/>
-		{% for message in app.session.flashbag().get('status') %}
-			<div class="alert alert-success">{{ message }}</div>
-		{% endfor %}
-		<table class="table table-bordered">
-			<tr>
-				<th>Nombre</th>
-				<th>Apellido</th>
-				
-				
-			<tr>
-			{% for persona in personas %}
-				
-				<tr>
+        <h2>Información Personal</h2>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <table class="table table-bordered ">
 
-					<td>{{persona.nombre}}</td>
-					<td>{{persona.apellido}}</td>
-									
-				</tr>
-			{% endfor %}
-		</table>
-		
-		<hr/>
-	</div>
-	</div>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefonos</th>
+                <th>Cursos</th>
+            </tr>
+
+            <tr>
+                <td>{{persona.nombre}}</td>
+                <td>{{persona.apellido}}</td>
+                <td>
+                    {% for telefono in telefonos %}
+                        {{telefono.numero}}</br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for perscur in perscurs %}
+                        {% for cursos in cursos %}
+                            {% if perscur.cursos == cursos %}
+                                {{cursos.nombreCurso}} </br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                   
+                </td>
+            </tr>
+                   
+               
+        </table>
+       
+        <hr/>
+    </div>
+</div>
 
 
-	<div class="clearfix"></div>
+    <div class="center-block">
+
+        <h2>Información Personal</h2>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        <table class="table table-bordered ">
+
+        <div>
+            <tr>
+                <th>Nombre</th>
+                <td>{{persona.nombre}} {{persona.apellido}}</td>
+            </tr>   
+                <th>Telefonos</th>
+                <td>
+                    {% for telefono in telefonos %}
+
+                        {{telefono.numero}}
+                        {% if telefono.id >= 1 %}
+                        {{" / "}}
+                        {% endif %}
+
+                        {% if telefonos|length == 1 %} 
+                           algo
+                        
+                        {% endif %}
+
+
+                    {% endfor %}
+                </td>
+             <tr>
+                <th>Cursos</th>
+                <td>
+                    {% for perscur in perscurs %}
+                        {% for cursos in cursos %}
+                            {% if perscur.cursos == cursos %}
+                                {{cursos.nombreCurso}} </br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                   
+                </td>
+            </tr>
+        </div>
+               
+        </table>
+       
+        <hr/>
+    </div>
+
+
+    <div class="clearfix"></div>
 
 
 {% endblock %}

@@ -33,8 +33,10 @@
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      
 			      <ul class="nav navbar-nav">
-			      	{% block menu %}	
-			      	<li class="active"><a href="{{path("Blog_index_persona")}}">Personas<span class="sr-only">(current)</span></a></li>
+			      	{% block menu %}
+			      	{% if app.user != null %}	
+			      	<li class="active"><a href="{{path("Blog_index_persona")}}">Información<span class="sr-only">(current)</span></a></li>
+			      	{% endif %}
 			    <!--    <li><a href="#">Link</a></li> -->
 			        {% endblock %}
 			      </ul>			
@@ -71,13 +73,10 @@
 			
 		</header>
 		<section id="content">
-						
-			<div class="jumbotron">
-  				{% block content %}	
-				Bloque de Contenido
-				{% endblock %}
-  			</div>
-
+			
+			<div class="container jumbotron">
+				{% block content %} Bloque de Contenido {% endblock %}
+			</div>
 			
 		</section>
 
@@ -86,8 +85,8 @@
 		</nav>
 		<footer>
 			
-			<div class="col-lg-12" style="background-color:lavender;">Proyecto - Octavio Torres &copy;</div>
-			
+			<div class="col-lg-12 col-lg-offset-0 text-right" style="background-color:black; color:White;">Proyecto - Octavio Torres &copy;</div></br>
+									
 		</footer>
 		<!--
 		<h1>This is a Heading</h1>

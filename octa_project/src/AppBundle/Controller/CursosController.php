@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Cursos;
+use AppBundle\Entity\PersCurs;
 use AppBundle\Form\CursosType;
 
 class CursosController extends Controller
@@ -21,10 +22,15 @@ class CursosController extends Controller
 
         $em=$this->getDoctrine()->getEntityManager();
         $curso_repo = $em->getRepository("AppBundle:Cursos");
-        $cursos = $curso_repo->findAll(); /*Regresa todos los telefonos*/
+        $cursos = $curso_repo->findAll();
+
+
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $personas = $persona_repo->findAll();
 
         return $this->render('AppBundle:Cursos:index.html.twig', array(
-            "cursos" => $cursos
+            "cursos" => $cursos,
+            "personas" => $personas
         ));
 
     }
@@ -48,7 +54,16 @@ class CursosController extends Controller
                 $curso->setTutor($form->get("tutor")->getData());
                 $curso->setDescripcion($form->get("descripcion")->getData());
 
+                #Id de Persona Actual
+                $persona_repo = $em->getRepository("AppBundle:Persona");
+                $persona = $persona_repo->findOneByUsuario($this->getUser()->getId());
+                
+                $perscurs= new PersCurs();
+                $perscurs->setPersona($persona);
+                $perscurs->setCursos($curso);
+
                 $em->persist($curso);
+                $em->persist($perscurs);
                 $flush = $em->flush();
                 if($flush==null){
                         $status = "Todo Excelente...!!!"; 

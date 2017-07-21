@@ -15,25 +15,31 @@
 				<th>Editar</th>
 				<th>Borar</th>
 			<tr>
-			{% for telefono in telefonos %}
-				
-				<tr>
-					<td>{{telefono.numero}}</td>
-					<td>
-						<a href="{{path("Blog_edit_telefonos",{"id":telefono.id})}}" class="btn btn-warning">
-          					<span class="glyphicon glyphicon-edit"></span> Editar 
-					</td>
-					<td>
-						{% if telefono.persona|length == 0 %} 
-							<a href="{{path("Blog_delele_telefonos",{"id":telefono.id})}}" class="btn btn-danger">
-          					<span class="glyphicon glyphicon-remove"></span> Borrar 
-        					</a>
-        				{% else %}
-        					Creado por otro usuario
-        				{% endif %}
-						 	
-					</td>
-				</tr>
+			{% for persona in personas %}
+				{% for telefono in telefonos %}
+					{% if persona.id == app.user.id %}
+						{% if telefono.persona == persona %}
+						
+						<tr>
+							<td>{{telefono.numero}}</td>
+							<td>
+								<a href="{{path("Blog_edit_telefonos",{"id":telefono.id})}}" class="btn 	btn-warning">	
+	          						<span cla	ss="glyphicon glyphicon-edit"></span> Editar 	
+							</td>	
+							<td>	
+									{% if (app.user.id is defined) and (persona.usuario.id == app.user.id) %} 	
+										<a href="{{path("Blog_delele_telefonos",{"id":telefono.id})}}" class	="btn 	btn-danger">	
+	          						<span class=	"glyphicon glyphicon-remove"></span> Borrar 
+	        						</a>	
+	        					{% else 	%}	
+	        						Crea	do por o	tro usuario
+	        					{% endif	 %}	
+								 		
+							</td>	
+						</tr>	
+						{% endif %}
+					{% endif %}
+				{% endfor %}
 			{% endfor %}
 		</table>
 		<a href="{{path("Blog_add_telefonos")}}" class="btn btn-success">

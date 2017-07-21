@@ -28,11 +28,50 @@ class PersonaController extends Controller
     public function indexAction(){
 
         $em=$this->getDoctrine()->getEntityManager();
+        # Extraer Persona Actual
+        $user = $this->getUser()->getId(); 
         $persona_repo = $em->getRepository("AppBundle:Persona");
-        $personas = $persona_repo->findAll(); /*Regresa todos los telefonos*/
+        $persona = $persona_repo->findOneByUsuario($user);
+        # Telefonos de Persona
+        $telf_repo = $em->getRepository("AppBundle:Telefono");
+        $telefonos = $telf_repo->findBy(array("persona"=>$persona));
+        # Cursos de Persona
+        $perscurs_repo = $em->getRepository("AppBundle:PersCurs");
+        $perscurs = $perscurs_repo->findBy(array("persona"=>$persona));
+        # Cursos
+        $cursos_repo = $em->getRepository("AppBundle:Cursos");
+        $cursos = $cursos_repo->findAll();
+
+        //$perscurs = $curso_repo->findBy(array("persona"=>$persona));
+        //$perscurs = $perscurs_repo->findOneByCursos(1);
+        //echo $perscurs->getId();
+        //echo $cursos->getNombreCurso();
+        //die();
+
+
+
+        //$persona = $persona_repo->findOneByUsuario($user);
+
+        #$curso_repo = $em->getRepository("AppBundle:Cursos");
+        #$cursos = $curso_repo->findOneById(2);
+        #//$cursos = $curso_repo->findBy(array("NombreCurso"=>PHP));
+        ##$personas = $persona_repo->findOneByUsuario(2);
+        ##echo $user;
+        #echo $cursos->getNombreCurso();
+
+        //echo $telefono[2]->getNumero();
+
+        //echo $cursos;
+        //die();
+
 
         return $this->render('AppBundle:Persona:index.html.twig', array(
-            "personas" => $personas
+            //"personas" => $personas,
+            "telefonos" => $telefonos,
+            "persona" => $persona,
+            //"telefonoss" => $telefono
+            "cursos" => $cursos,
+             "perscurs" => $perscurs,
         ));
 
     }
