@@ -114,7 +114,7 @@ class TelefonoController extends Controller
         $telefono=$telf_repo->find($id);
         # Borrar Telefono de Persona
          
-        if (count($telefono->getPersona())==0)
+        if (count($telefono->getPersona())==1)
         {
             $em->remove($telefono);
             $em->flush();

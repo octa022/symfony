@@ -26,6 +26,10 @@ Blog_delele_cursos:
     path: /cursos/delete/{id}
     defaults: { _controller: AppBundle:Cursos:delete }
 
+Blog_edit_cursos:
+    path: /cursos/edit/{id}
+    defaults: { _controller: AppBundle:Cursos:edit }
+
 # Telefonos
 Blog_index_telefonos:
     path: /telefonos
@@ -51,3 +55,22 @@ Blog_add_persona:
 Blog_index_persona:
     path: /persona
     defaults: { _controller: AppBundle:Persona:index }
+
+Blog_delete_persona:
+    path: /persona/delete/{id}
+    defaults: { _controller: AppBundle:Persona:delete }
+
+Blog_edit_persona:
+    path: /persona/edit/{id}
+    defaults: { _controller: AppBundle:Persona:edit }
+
+
+######
+Blog_add_perscurs:
+    path: /pc/add
+    defaults: { _controller: AppBundle:PersCurs:add }
+
+
+Blog_new_cursos:
+    path: /cursos/new/{id}
+    defaults: { _controller: AppBundle:Cursos:new }

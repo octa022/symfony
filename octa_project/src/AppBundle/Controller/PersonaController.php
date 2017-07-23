@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Form\PersonaType;
 
 class PersonaController extends Controller
 {
@@ -96,8 +97,6 @@ class PersonaController extends Controller
             ->getForm()
         ;
 
-
-
         $form->handleRequest($request);
         /*Comprobar si el formulario se envio*/
         if($form->isSubmitted()) 
@@ -118,7 +117,6 @@ class PersonaController extends Controller
                     $factory = $this->get("security.encoder_factory");
                     $encoder = $factory->getEncoder($user);
                     $password = $encoder->encodePassword($form->get("password")->getData(),$user->getSalt());
-                    /*cifrar contraseñas*/
 
                     $user->setPassword($password);
                     $user->setRole("ROLE_USER");
@@ -145,8 +143,6 @@ class PersonaController extends Controller
                     $perscurs->setPersona($persona);
                     $perscurs->setCursos($cursos);
 
-                    #############3
-
                     $em = $this->getDoctrine()->getEntityManager();
                     $em->persist($user);
                     $em->persist($persona);
@@ -163,7 +159,8 @@ class PersonaController extends Controller
                     {
                         $status = "No te registraste De Forma Correcta";
                     }
-                    return $this->redirectToRoute("Blog_index_persona"); /*Redireccion*/ 
+
+                    //return $this->redirectToRoute("Blog_add_persona");  
                 }
                 else
                 {
@@ -181,6 +178,101 @@ class PersonaController extends Controller
         return $this->render('AppBundle:Persona:add.html.twig', array(
             "form" => $form->createView() 
         ));
+    }
+
+    # Borrar
+    public function deleteAction($id)
+    { 
+        $em=$this->getDoctrine()->getEntityManager();        
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $perscurs_repo = $em->getRepository("AppBundle:PersCurs");
+        
+
+        $persona = $persona_repo->find($id);
+        # Borrar Telefono de Persona
+        //$usuario=$usuario_repo->findBy(array("persona"=>$persona));
+        $perscurs=$perscurs_repo->findBy(array("persona"=>$persona));
+
+        foreach ($perscurs as $pC)
+        {
+            $em->remove($pC);
+            //$em->flush();
+        }
+
+        $ptelefonos_repo = $em->getRepository("AppBundle:Telefono");
+        $telefonos=$ptelefonos_repo->findBy(array("persona"=>$persona));
+        foreach ($telefonos as $telefono)
+        {
+            $em->remove($telefono);
+            //$em->flush();
+        }
+
+
+        #$usuario_repo = $em->getRepository("AppBundle:Usuario");
+        #$usuario=$usuario_repo->findBy(array("persona"=>$persona));
+        
+        $user = $this->getUser();
+        $em->remove($user);
+        //$em->flush(); 
+        //foreach ($usuario as $user)
+        //{
+        //    $em->remove($user);
+        //    $em->flush();
+        //}
+
+        //$em->remove($persona);
+        $em->flush();
+                
+        //return $this->redirectToRoute("app_homepage");
+        return $this->redirectToRoute("logout");
+
+    }
+
+
+    public function editAction(Request $request, $id)
+    { 
+        $em=$this->getDoctrine()->getEntityManager();
+        
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $persona = $persona_repo->find($id);
+        
+        $form = $this->createForm(PersonaType::class,$persona);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) 
+        {
+            if ($form->isValid())
+            {
+                $persona->setNombre($form->get("nombre")->getData());
+                $persona->setApellido($form->get("apellido")->getData());
+                               
+                $em->persist($persona);
+                $flush = $em->flush();
+                if($flush==null){
+                        $status = "Edicion Excelente...!!!"; 
+                }
+                else
+                {
+                    $status = "Error al editar, Intenta Nuevamente...!!!"; 
+                }
+            }
+            else
+            {
+                $status = "No se ha podido Editar Correctamente...!!!"; 
+            }
+
+            $this->session->getFlashBag()->add("status",$status); 
+            return $this->redirectToRoute("Blog_index_persona");
+        }
+
+        return $this->render('AppBundle:Persona:edit.html.twig', array(
+            "form" => $form->createView() 
+        )); 
+
+
+
+
     }
 
 }

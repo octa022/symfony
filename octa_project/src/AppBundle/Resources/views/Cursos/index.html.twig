@@ -2,31 +2,90 @@
 
 {% block content %}
 	
-	<div class="col-lg-4">
+	<div class="center-block">
 
 		<h2>Todos los Cursos</h2>
 		<hr/>
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<table class="table table-bordered">
+		<table class="table table-responsive">
+			<tr>
+				<th>Curso</th>
+				<th>Tutor</th>
+				<th>Descripción</th>
+				<th>Editar</th>
+				<th>Borar</th>
+				<th>Inscribir</th>
+				<th>Inscrito</th>
+				
+			</tr>
+			
+
 			{% for curso in cursos %}
 				<tr>
 					<td>{{curso.nombreCurso}}</td>
 					<td>{{curso.tutor}}</td>
 					<td>{{curso.descripcion}}</td>
 					<td>
+						<a href="{{path("Blog_edit_cursos",{"id":curso.id})}}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> </a> 	
+					</td>
+					<td>
 						{% if curso.persCurs|length == 0 %} 
 							<a href="{{path("Blog_delele_cursos",{"id":curso.id})}}" class="btn btn-danger">
-          					<span class="glyphicon glyphicon-remove"></span> Borrar 
-        					</a>
+          					<span class="glyphicon glyphicon-remove"></span> </a>
         				{% else %}
         					Creado por otro usuario
         				{% endif %}
 						 	
 					</td>
+
+					<td>
+					<a href="{{path("Blog_new_cursos",{"id":curso.id})}}" class="btn btn-success">
+          				<span class="glyphicon glyphicon-ok"></span></a>
+          			</td>
+
+					{% for persona in personas %} {% for pc in perscurs %}
+					{% if (persona.id == app.user.id) and (pc.persona == persona)%} 
+					{% if (pc.cursos == curso) %} 
+					<td>
+						<a href="#" class="btn btn-info">
+          				<span class="glyphicon glyphicon-ok-sign"></span> </a>
+        			</td>
+        			
+        			
+					
+          					
+        			
+
+          			{% endif %}
+        			{% endif %}	
+					{% endfor %} {% endfor %}
+					
+
+
+					
+					
+
+        			
+
+          			
+
+
+
+
+				
+
+        			
+
+        				
+
 				</tr>
 			{% endfor %}
+
+
+			
+			
 		</table>
 		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Otro Curso</a>
 		<hr/>

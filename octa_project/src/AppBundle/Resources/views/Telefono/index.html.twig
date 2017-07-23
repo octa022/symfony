@@ -9,7 +9,7 @@
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<table class="table table-bordered">
+		<table class="table table-responsive">
 			<tr>
 				<th>Telefono</th>
 				<th>Editar</th>
@@ -24,18 +24,11 @@
 							<td>{{telefono.numero}}</td>
 							<td>
 								<a href="{{path("Blog_edit_telefonos",{"id":telefono.id})}}" class="btn 	btn-warning">	
-	          						<span cla	ss="glyphicon glyphicon-edit"></span> Editar 	
+	          						<span class="glyphicon glyphicon-edit"></span> </a> 	
 							</td>	
 							<td>	
-									{% if (app.user.id is defined) and (persona.usuario.id == app.user.id) %} 	
-										<a href="{{path("Blog_delele_telefonos",{"id":telefono.id})}}" class	="btn 	btn-danger">	
-	          						<span class=	"glyphicon glyphicon-remove"></span> Borrar 
-	        						</a>	
-	        					{% else 	%}	
-	        						Crea	do por o	tro usuario
-	        					{% endif	 %}	
-								 		
-							</td>	
+								<a href="{{path("Blog_delele_telefonos",{"id":telefono.id})}}" class	="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> </a>	
+	        				</td>	
 						</tr>	
 						{% endif %}
 					{% endif %}

@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class= "container">
-    <div class="col-lg-4">
-
+    <div class="center-block">
+    {% if app.user != null%}
         <h2>Información Personal</h2>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
@@ -13,14 +13,14 @@
 
             <tr>
                 <th>Nombre</th>
-                <th>Apellido</th>
+                
                 <th>Telefonos</th>
                 <th>Cursos</th>
             </tr>
 
             <tr>
-                <td>{{persona.nombre}}</td>
-                <td>{{persona.apellido}}</td>
+                <td>{{persona.nombre}} {{persona.apellido}}</td>
+               
                 <td>
                     {% for telefono in telefonos %}
                         {{telefono.numero}}</br>
@@ -37,9 +37,30 @@
                    
                 </td>
             </tr>
+
+            <tr>
+
+                <td>
+                    <a href="{{path("Blog_edit_persona",{"id":persona.id})}}" class="btn     btn-warning">   
+                    <span class="glyphicon glyphicon-edit"></span> </a>
+                </td>
+
+                 <td>
+                    <a href="{{path("Blog_index_telefonos")}}" class="btn btn-info">   
+                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a> 
+                </td>
+
+                <td>
+                    <a href="{{path("Blog_index_cursos")}}" class="btn btn-info">   
+                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
+                </td>
+            </tr>
                    
                
         </table>
+        {% else %}
+            <h1> Registrate </h1>
+        {% endif%}
        
         <hr/>
     </div>
@@ -59,37 +80,45 @@
             <tr>
                 <th>Nombre</th>
                 <td>{{persona.nombre}} {{persona.apellido}}</td>
-            </tr>   
+                <td>
+                    <a href="{{path("Blog_edit_persona",{"id":persona.id})}}" class="btn     btn-warning">   
+                    <span class="glyphicon glyphicon-edit"></span> </a>
+
+                    <a href="{{path("Blog_delete_persona",{"id":persona.id})}}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> </a>      
+                </td>
+            </tr>
+
+            <tr>   
                 <th>Telefonos</th>
                 <td>
                     {% for telefono in telefonos %}
-
-                        {{telefono.numero}}
-                        {% if telefono.id >= 1 %}
-                        {{" / "}}
-                        {% endif %}
-
-                        {% if telefonos|length == 1 %} 
-                           algo
-                        
-                        {% endif %}
-
-
+                        {{telefono.numero}} </br>
                     {% endfor %}
                 </td>
-             <tr>
+                <td>
+                    <a href="{{path("Blog_index_telefonos")}}" class="btn btn-info">   
+                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a> 
+                </td>
+            </tr>
+
+            <tr>
                 <th>Cursos</th>
                 <td>
                     {% for perscur in perscurs %}
                         {% for cursos in cursos %}
                             {% if perscur.cursos == cursos %}
-                                {{cursos.nombreCurso}} </br>
+                                {{cursos.nombreCurso}} {{" : "}} {{cursos.descripcion}} </br>
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-                   
+                </td>
+                <td>
+                    <a href="{{path("Blog_index_cursos")}}" class="btn btn-info">   
+                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
                 </td>
             </tr>
+
+
         </div>
                
         </table>
