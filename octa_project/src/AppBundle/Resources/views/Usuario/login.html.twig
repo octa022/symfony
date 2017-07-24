@@ -1,5 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 
+{% block title %} Login {% endblock %}
+
 {% block content %}
 	
 	{% if is_granted('ROLE_USER') %}
@@ -11,7 +13,8 @@
 
 	{% if is_granted('ROLE_ADMIN') %}
 		<strong>
-			Eres Super Usuario
+			<h1>Bienvenido {{app.user.user}}</h1>
+			<meta http-equiv="refresh" content="1;URL={{path("app_homepage")}}" />
 		</strong>
 	{% endif %}
 

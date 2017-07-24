@@ -1,15 +1,17 @@
 {% extends "AppBundle::layout.html.twig" %}
 
+{% block title %} Telefonos {% endblock %}
+
 {% block content %}
 	
-	<div class="col-lg-4">
+	<div align="center" >
 
-		<h2>Telefonos</h2>
+		<h2>Numeros Telefonicos</h2>
 		<hr/>
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<table class="table table-responsive">
+		<table class="table table-responsive" style="width:40%">
 			<tr>
 				<th>Telefono</th>
 				<th>Editar</th>

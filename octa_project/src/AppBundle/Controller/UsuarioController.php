@@ -32,15 +32,10 @@ class UsuarioController extends Controller
         $authenticationUtils = $this->get("security.authentication_utils");
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        #####
-         
-        //return $this->redirectToRoute("Blog_add_persona"); /*Redireccion*/ 
-        //devolver la vista
+
         return $this->render('AppBundle:Usuario:login.html.twig', array(
             "error" => $error,
             "last_username" => $lastUsername
-            //"form" => $form->createView()
-
             
         ));   
     }
@@ -48,11 +43,8 @@ class UsuarioController extends Controller
     public function registroAction(Request $request)
     {
         $user = new Usuario();
-        //$formU = $this->createForm(UsuarioType::class,$user);
         $telefono = new Telefono();
-
         $persona = new Persona();
-        //$formP = $this->createForm(PersonaType::class,$persona);
 
         $form = $this->createFormBuilder()
             ->add('nombre',TextType::class, array("label"=>"Nombre","required"=>"required", "attr" =>array("class" => "form_name form-control")))
@@ -64,10 +56,7 @@ class UsuarioController extends Controller
             ->getForm()
         ;
 
-
-
         $form->handleRequest($request);
-        /*Comprobar si el formulario se envio*/
         if($form->isSubmitted()) 
         {
             if ($form->isValid())   
@@ -91,43 +80,16 @@ class UsuarioController extends Controller
                     $user->setPassword($password);
                     $user->setRole("ROLE_USER");
 
-                    ###########33
-                    //$em=$this->getDoctrine()->getEntityManager();
-                    $persona_repo =$em->getRepository("AppBundle:Persona");
+                    //$persona_repo =$em->getRepository("AppBundle:Persona");
 
                     $persona = new Persona();
-                    //$pId = new Persona(); 
-                    //$user->addPersona($persona); 
-
                     $persona->setNombre($form->get("nombre")->getData());
                     $persona->setApellido($form->get("apellido")->getData());
-                    //$persona->setTelefono($form->get("telefono")->getData());
-
-                    ##
                     $persona->setUsuario($user);
-                    ##
-                    #$idsuario = $user->setId();
-                    #$persona->setUsuario($idsuario);
-                    //$userid=$this->getUser();
-                    //$persona->setUsuario($userid);
-                    #$user=$this->getUser();
-                    #$persona->setUsuario($user);
-                                
-                    //$em->persist($persona);
-                    //$flush = $em->flush();
-
-                    ##$persona_repo->saveDatos(
-                    ##$form->get("nombre")->getData(),
-                    ##$form->get("apellido")->getData(),
-                    ##$form->get("telefono")->getData()
-                    ##//$user
-                    ##);
+                   
                     $telefono = new Telefono();
                     $telefono->setNumero($form->get("numero")->getData());
                     $telefono->setPersona($persona);
-
-
-                    #############3
 
                     $em = $this->getDoctrine()->getEntityManager();
                     $em->persist($user);
@@ -143,8 +105,7 @@ class UsuarioController extends Controller
                     {
                         $status = "No te registraste De Forma Correcta";
                     }
-                    //$this <meta http-equiv="refresh" content="1;URL={{path("app_homepage")}}" />;
-                    //return $this->redirectToRoute("AppBundle:Persona:index.html.twig"); /*Redireccion*/ 
+                   
                     return $this->redirectToRoute("Blog_index_persona"); /*Redireccion*/ 
                 }
                 else
@@ -161,13 +122,8 @@ class UsuarioController extends Controller
         }
          
         
-        //devolver la vista
         return $this->render('AppBundle:Usuario:registro.html.twig', array(
-            //"error" => $error,
-            //"last_username" => $lastUsername,
             "form" => $form->createView()
-
-            
         ));   
     }
 

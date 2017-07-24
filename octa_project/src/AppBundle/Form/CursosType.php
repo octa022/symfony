@@ -23,7 +23,7 @@ class CursosType extends AbstractType
             ->add('nombreCurso',TextType::class, array("label"=>"Curso","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ->add('nombreCurso',TextType::class, array("label"=>"Curso","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ->add('tutor',TextType::class, array("label"=>"Tutor","required"=>"required", "attr" =>array("class" => "form_name form-control")))
-            ->add('descripcion',TextareaType::class, array("label"=>"Descripcion","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('descripcion',TextareaType::class, array("label"=>"Descripción","required"=>"required", "attr" =>array("class" => "form_name form-control")))
             ->add('Guardar',SubmitType::class, array("attr" =>array("class" => "form_submit btn btn-success")))
         ;
     }

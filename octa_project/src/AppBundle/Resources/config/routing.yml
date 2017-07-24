@@ -66,10 +66,6 @@ Blog_edit_persona:
 
 
 ######
-Blog_add_perscurs:
-    path: /pc/add
-    defaults: { _controller: AppBundle:PersCurs:add }
-
 
 Blog_new_cursos:
     path: /cursos/new/{id}

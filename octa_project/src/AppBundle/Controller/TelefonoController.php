@@ -59,18 +59,10 @@ class TelefonoController extends Controller
                 $user = $this->getUser()->getId(); 
                 $persona_repo = $em->getRepository("AppBundle:Persona");
                 $persona = $persona_repo->findOneByUsuario($user);
-
-                //$persona =$personas; 
-
-                //echo $persona;
-                //die();                
-
+           
                 $telefono = new Telefono();
                 $telefono->setPersona($persona);
                 $telefono->setNumero($form->get("numero")->getData());
-
-                
-
                                             
                 $em->persist($telefono);
                 $flush = $em->flush();
@@ -91,30 +83,22 @@ class TelefonoController extends Controller
                 $status = "Rellenar Correctamente...!!!"; 
             }
 
-            /*SMS Inf*/
-            #$this->session->getFlashBag()->add("status",$status); 
-            #return $this->redirectToRoute("Blog_index_telefonos"); /*Redireccion*/ 
         }
         
         
-        //echo $this->getPersona()->getId();
-
-        
-       
-
         return $this->render('AppBundle:Telefono:add.html.twig', array(
             "form" => $form->createView(),             
         )); 
     }
 
     public function deleteAction($id)
-    { //73
+    { 
         $em=$this->getDoctrine()->getEntityManager();
         $telf_repo = $em->getRepository("AppBundle:Telefono");
         $telefono=$telf_repo->find($id);
         # Borrar Telefono de Persona
          
-        if (count($telefono->getPersona())==1)
+        if (count($telefono)==1)
         {
             $em->remove($telefono);
             $em->flush();
@@ -125,7 +109,7 @@ class TelefonoController extends Controller
     }
 
     public function editAction(Request $request, $id)
-    { //74
+    { 
         $em=$this->getDoctrine()->getEntityManager();
         $telf_repo = $em->getRepository("AppBundle:Telefono");
         $telefono=$telf_repo->find($id);
@@ -168,14 +152,6 @@ class TelefonoController extends Controller
             "form" => $form->createView() 
         )); 
 
-
-
-
     }
-
-
-        
-
-
 
 }

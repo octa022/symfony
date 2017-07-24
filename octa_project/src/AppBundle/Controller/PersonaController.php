@@ -43,36 +43,11 @@ class PersonaController extends Controller
         $cursos_repo = $em->getRepository("AppBundle:Cursos");
         $cursos = $cursos_repo->findAll();
 
-        //$perscurs = $curso_repo->findBy(array("persona"=>$persona));
-        //$perscurs = $perscurs_repo->findOneByCursos(1);
-        //echo $perscurs->getId();
-        //echo $cursos->getNombreCurso();
-        //die();
-
-
-
-        //$persona = $persona_repo->findOneByUsuario($user);
-
-        #$curso_repo = $em->getRepository("AppBundle:Cursos");
-        #$cursos = $curso_repo->findOneById(2);
-        #//$cursos = $curso_repo->findBy(array("NombreCurso"=>PHP));
-        ##$personas = $persona_repo->findOneByUsuario(2);
-        ##echo $user;
-        #echo $cursos->getNombreCurso();
-
-        //echo $telefono[2]->getNumero();
-
-        //echo $cursos;
-        //die();
-
-
         return $this->render('AppBundle:Persona:index.html.twig', array(
-            //"personas" => $personas,
             "telefonos" => $telefonos,
             "persona" => $persona,
-            //"telefonoss" => $telefono
             "cursos" => $cursos,
-             "perscurs" => $perscurs,
+            "perscurs" => $perscurs,
         ));
 
     }
@@ -160,7 +135,6 @@ class PersonaController extends Controller
                         $status = "No te registraste De Forma Correcta";
                     }
 
-                    //return $this->redirectToRoute("Blog_add_persona");  
                 }
                 else
                 {
@@ -269,9 +243,6 @@ class PersonaController extends Controller
         return $this->render('AppBundle:Persona:edit.html.twig', array(
             "form" => $form->createView() 
         )); 
-
-
-
 
     }
 

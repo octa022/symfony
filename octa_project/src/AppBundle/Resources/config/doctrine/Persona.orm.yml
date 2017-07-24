@@ -1,7 +1,7 @@
 AppBundle\Entity\Persona:
     type: entity
     table: persona
-    repositoryClass: AppBundle\Repository\PersonaRepository
+    #repositoryClass: AppBundle\Repository\PersonaRepository
     indexes:
         usuario_id:
             columns:
@@ -39,7 +39,7 @@ AppBundle\Entity\Persona:
                 usuario_id:
                     referencedColumnName: id
             orphanRemoval: false
-    #··················· Nueva Relacion (P1)         
+    #···················         
     oneToMany:
         telefono:
             targetEntity: Telefono

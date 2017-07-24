@@ -1,22 +1,24 @@
 {% extends "AppBundle::layout.html.twig" %}
 
+{% block title %} Cursos {% endblock %}
+
 {% block content %}
 	
-	<div class="center-block">
+	<div align="center">
 
-		<h2>Todos los Cursos</h2>
+		<h2>Tabla de Cursos</h2>
 		<hr/>
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<table class="table table-responsive">
+		<table class="table table-responsive" style="width:80%">
 			<tr>
 				<th>Curso</th>
 				<th>Tutor</th>
 				<th>Descripción</th>
 				<th>Editar</th>
 				<th>Borar</th>
-				<th>Inscribir</th>
+				<th>Agregar</th>
 				<th>Inscrito</th>
 				
 			</tr>
@@ -87,7 +89,7 @@
 			
 			
 		</table>
-		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Otro Curso</a>
+		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Nuevo Curso</a>
 		<hr/>
 	</div>
 

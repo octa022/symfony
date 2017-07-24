@@ -1,132 +1,59 @@
 {% extends "AppBundle::layout.html.twig" %}
 
+{% block title %} Información {% endblock %}
+
 {% block content %}
-<div class= "container">
-    <div class="center-block">
-    {% if app.user != null%}
-        <h2>Información Personal</h2>
-        <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
-        <table class="table table-bordered ">
 
-            <tr>
-                <th>Nombre</th>
-                
-                <th>Telefonos</th>
-                <th>Cursos</th>
-            </tr>
-
-            <tr>
-                <td>{{persona.nombre}} {{persona.apellido}}</td>
-               
-                <td>
-                    {% for telefono in telefonos %}
-                        {{telefono.numero}}</br>
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for perscur in perscurs %}
-                        {% for cursos in cursos %}
-                            {% if perscur.cursos == cursos %}
-                                {{cursos.nombreCurso}} </br>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                   
-                </td>
-            </tr>
-
-            <tr>
-
-                <td>
-                    <a href="{{path("Blog_edit_persona",{"id":persona.id})}}" class="btn     btn-warning">   
-                    <span class="glyphicon glyphicon-edit"></span> </a>
-                </td>
-
-                 <td>
-                    <a href="{{path("Blog_index_telefonos")}}" class="btn btn-info">   
-                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a> 
-                </td>
-
-                <td>
-                    <a href="{{path("Blog_index_cursos")}}" class="btn btn-info">   
-                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
-                </td>
-            </tr>
-                   
-               
-        </table>
-        {% else %}
-            <h1> Registrate </h1>
-        {% endif%}
-       
-        <hr/>
-    </div>
-</div>
-
-
-    <div class="center-block">
+    <div class="center-block"  align="center">
 
         <h2>Información Personal</h2>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
-        <table class="table table-bordered ">
+        <table class="table table-bordered " style="width:60%" >
 
-        <div>
-            <tr>
-                <th>Nombre</th>
-                <td>{{persona.nombre}} {{persona.apellido}}</td>
-                <td>
-                    <a href="{{path("Blog_edit_persona",{"id":persona.id})}}" class="btn     btn-warning">   
-                    <span class="glyphicon glyphicon-edit"></span> </a>
-
-                    <a href="{{path("Blog_delete_persona",{"id":persona.id})}}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> </a>      
-                </td>
-            </tr>
-
-            <tr>   
-                <th>Telefonos</th>
-                <td>
-                    {% for telefono in telefonos %}
-                        {{telefono.numero}} </br>
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{path("Blog_index_telefonos")}}" class="btn btn-info">   
-                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a> 
-                </td>
-            </tr>
-
-            <tr>
-                <th>Cursos</th>
-                <td>
-                    {% for perscur in perscurs %}
-                        {% for cursos in cursos %}
-                            {% if perscur.cursos == cursos %}
-                                {{cursos.nombreCurso}} {{" : "}} {{cursos.descripcion}} </br>
-                            {% endif %}
+            <div>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{persona.nombre}} {{persona.apellido}}</td>
+                    <td>
+                        <a href="{{path("Blog_edit_persona",{"id":persona.id})}}" class="btn btn-warning">   
+                        <span class="glyphicon glyphicon-edit"></span> </a>
+                    </td>
+                </tr>
+                <tr>   
+                    <th>Telefonos</th>
+                    <td>
+                        {% for telefono in telefonos %}
+                            {{telefono.numero}} </br>
                         {% endfor %}
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{path("Blog_index_cursos")}}" class="btn btn-info">   
-                    <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
-                </td>
-            </tr>
-
-
-        </div>
-               
+                    </td>
+                    <td>
+                        <a href="{{path("Blog_index_telefonos")}}" class="btn btn-info">   
+                        <span class="glyphicon glyphicon glyphicon-pencil"></span> </a> 
+                    </td>
+                </tr>
+                <tr>
+                    <th>Cursos</th>
+                    <td>
+                        {% for perscur in perscurs %}
+                            {% for cursos in cursos %}
+                                {% if perscur.cursos == cursos %}
+                                    {{cursos.nombreCurso}} {{" : "}} {{cursos.descripcion}} </br>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{path("Blog_index_cursos")}}" class="btn btn-info">   
+                        <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
+                    </td>
+                </tr>
+            </div>      
         </table>
-       
-        <hr/>
+       <hr/>
     </div>
-
-
     <div class="clearfix"></div>
 
 

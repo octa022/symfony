@@ -99,37 +99,27 @@ class CursosController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         $curso_repo = $em->getRepository("AppBundle:Cursos");
         $curso=$curso_repo->find($id);
-        # Borrar Curso
+        # Borrar Relacion de Curso
+        $persona_repo = $em->getRepository("AppBundle:Persona");
+        $persona = $persona_repo->findOneByUsuario($this->getUser()->getId());
 
-        $pc_repo = $em->getRepository("AppBundle:PersCurs");
-        $perscurs = $pc_repo->findOneByCursos($curso);
+        $perscurs_repo = $em->getRepository("AppBundle:PersCurs");
+        $pc_cursos = $perscurs_repo->findBy(array("cursos"=>$curso)); # ID de relacion de persona con P_C
+        $pc_personas = $perscurs_repo->findBy(array("persona"=>$persona)); # ID de relacion de persona con P_C
 
 
-        //$persona_repo = $em->getRepository("AppBundle:Persona");
-        //$persona = $persona_repo->findOneByUsuario($this->getUser()->getId());
+        foreach ($pc_cursos as $pc_c){
+            foreach ($pc_personas as $pc_p) {
+                if ($pc_c == $pc_p){
 
-        //$perscurs= new PersCurs();
-        //$perscurs->setPersona($persona);
-        //$perscurs->setCursos($curso);
-        //$em->persist($curso);
-        //$em->persist($perscurs);
-        echo $curso->getId();
-        //echo $perscurs->getId();
-
-        //die();
-        //var_dump(count($curso->getPersCurs()));
-        //if (count($curso->getPersCurs())==0)
-        //{
-            //$em->remove($curso);
-            
-            //$em->flush();
-        //}
-        if (count($perscurs) != null ){
-        
-        $em->remove($perscurs);
-        $em->flush();
+                    $em->remove($pc_c);
+                    $em->flush();
+                     
+                }
+                else{ echo "no"; }
+             }
         }
-        
+
         
         return $this->redirectToRoute("Blog_index_cursos");
 
@@ -178,7 +168,7 @@ class CursosController extends Controller
         )); 
     }
 
-    ######
+    
     public function newAction(Request $request, $id)
     { 
         $em=$this->getDoctrine()->getEntityManager();
@@ -189,10 +179,26 @@ class CursosController extends Controller
         $persona = $persona_repo->findOneByUsuario($this->getUser()->getId());
 
         # Comprobar si ya inscribio el curso
-        $pc_repo = $em->getRepository("AppBundle:PersCurs");
-        $perscurs = $pc_repo->findOneByCursos($curso);
+        $perscurs_repo = $em->getRepository("AppBundle:PersCurs");
+        $pc_cursos = $perscurs_repo->findBy(array("cursos"=>$curso)); # ID de relacion de persona con PC
+        $pc_personas = $perscurs_repo->findBy(array("persona"=>$persona)); # ID de relacion de persona con PC
 
-        if(count($perscurs)==0)        
+        $inscrito = 0;
+        foreach ($pc_cursos as $pc_c){
+            foreach ($pc_personas as $pc_p) {
+ 
+                if ($pc_c == $pc_p){
+ 
+                    echo $pc_c->getId(); echo "/";
+                    echo $pc_p->getId(); echo "/";
+                    $inscrito =  $inscrito+1;
+     
+                }elseif ((count($pc_cursos) !== 0)){ echo " no "; }
+             }
+        }
+
+     
+        if((count($pc_cursos) == 0))        
         {
             $perscurs= new PersCurs();          #
             $perscurs->setPersona($persona);    #
@@ -202,6 +208,15 @@ class CursosController extends Controller
             $status = "Inscribiste el Curso";               #
 
         }
+        elseif((count($pc_cursos) >= 1)  and ($inscrito == 0))   {
+           $perscurs= new PersCurs();          #
+            $perscurs->setPersona($persona);    #
+            $perscurs->setCursos($curso);       #
+            $em->persist($perscurs);        #
+            $em->flush();                   #
+            $status = "Inscribiste el Curso";               #
+        }
+        
         else
             {
                 $status = "Ya Existe el Curso";
@@ -210,49 +225,6 @@ class CursosController extends Controller
         $this->session->getFlashBag()->add("status",$status);
         return $this->redirectToRoute("Blog_index_cursos");
         
-#        if($form->isSubmitted()) 
-#        {
-#            if ($form->isValid())
-#            {$em=$this->getDoctrine()->getEntityManager();
-#               
-#                $curso = new Cursos();
-#                $curso->setNombreCurso($form->get("nombreCurso")->getData());
-#                $curso->setTutor($form->get("tutor")->getData());
-#                $curso->setDescripcion($form->get("descripcion")->getData());
-#
-#                #Id de Persona Actual
-#                $persona_repo = $em->getRepository("AppBundle:Persona");
-#                $persona = $persona_repo->findOneByUsuario($this->getUser()->getId());
-#                
-#                $perscurs= new PersCurs();
-#                $perscurs->setPersona($persona);
-#                $perscurs->setCursos($curso);
-#
-#                $em->persist($curso);
-#                $em->persist($perscurs);
-#                
-#                $flush = $em->flush();
-#                if($flush==null){
-#                        $status = "Todo Excelente...!!!"; 
-#                }
-#                else
-#                {
-#                    $status = "Error, Intenta Nuevamente...!!!"; 
-#                }
-#            }
-#            else
-#            {
-#                $status = "No se ha podido Editar Correctamente...!!!"; 
-#            }
-#
-#            /*SMS Inf*/
-#            $this->session->getFlashBag()->add("status",$status); 
-#            return $this->redirectToRoute("Blog_index_cursos"); 
-#        }
-#
-#        return $this->render('AppBundle:Cursos:edit.html.twig', array(
-#            "form" => $form->createView() 
-#        )); 
     }     
         
 }

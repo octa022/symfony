@@ -1,10 +1,13 @@
 {% extends "AppBundle::layout.html.twig" %}
+
+{% block title %} Editar {% endblock %}
+
 {% block content %}
 	<div class="col-lg-4">
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<h2>Persona</h2>
+		<h2>Editar Datos</h2>
 		{{form_start(form)}}
 		{{form_end(form)}}
 	</div>
