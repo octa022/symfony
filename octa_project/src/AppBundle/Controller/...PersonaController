@@ -7,24 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Persona;
-use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Telefono;
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Cursos;
 use AppBundle\Entity\PersCurs;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Form\PersonaType;
-use AppBundle\Form\UsuarioType;
-use AppBundle\Form\TelefonoType;
-use AppBundle\Form\CursosType;
-//use AppBundle\Entity\Telefono;
-//use AppBundle\Entity\Usuario;
-//use AppBundle\Entity\Cursos;
-//use AppBundle\Entity\PersCurs;
-//use Symfony\Component\Form\Extension\Core\Type\TextType;
-//use Symfony\Component\Form\Extension\Core\Type\NumberType;
-//use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-//use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-//use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-//use AppBundle\Form\PersonaType;
 
 class PersonaController extends Controller
 {
@@ -62,11 +54,23 @@ class PersonaController extends Controller
     
     public function addAction(Request $request)
     {
+        $user = new Usuario();
         $persona = new Persona();
-        $form = $this->createForm(PersonaType::class, $persona);
-        $form->add('usuario', UsuarioType::class, ["mapped"=>false]);
-        $form->add('telefono', TelefonoType::class, ["mapped"=>false]);
-        $form->add('cursos', CursosType::class, ["mapped"=>false]);
+        $telefono = new Telefono();
+        $cursos = new Cursos();
+        
+        $form = $this->createFormBuilder()
+            ->add('nombre',TextType::class, array("label"=>"Nombre","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('apellido',TextType::class, array("label"=>"Apellido","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('user',TextType::class, array("label"=>"Usuario","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('password',PasswordType::class, array("label"=>"Contraseña","required"=>"required", "attr" =>array("class" => "form_password form-control")))
+            ->add('numero',TextType::class, array("label"=>"Telefono","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('nombreCurso',TextType::class, array("label"=>"Curso","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('tutor',TextType::class, array("label"=>"Tutor","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('descripcion',TextareaType::class, array("label"=>"Descripcion","required"=>"required", "attr" =>array("class" => "form_name form-control")))
+            ->add('Guardar',SubmitType::class, array("attr" =>array("class" => "form_submit btn btn-success")))
+            ->getForm()
+        ;
 
         $form->handleRequest($request);
         /*Comprobar si el formulario se envio*/
@@ -77,17 +81,17 @@ class PersonaController extends Controller
                 #Chequeo para saber si un usuario esta repetido
                 $em=$this->getDoctrine()->getEntityManager();
                 $user_repo=$em->getRepository("AppBundle:Usuario");    
-                $user = $user_repo->findOneBy(array("user"=>$form->get("usuario")->get("user")->getData()));
+                $user = $user_repo->findOneBy(array("user"=>$form->get("user")->getData()));
                 #Si el usuario no existe, crear usuario
                 if(count($user)==0) 
                 {
                     $user = new Usuario();
-                    $user->setUser($form->get("usuario")->get("user")->getData());
+                    $user->setUser($form->get("user")->getData());
 
                     /*cifrar contraseñas*/
                     $factory = $this->get("security.encoder_factory");
                     $encoder = $factory->getEncoder($user);
-                    $password = $encoder->encodePassword($form->get("usuario")->get("password")->getData(),$user->getSalt());
+                    $password = $encoder->encodePassword($form->get("password")->getData(),$user->getSalt());
 
                     $user->setPassword($password);
                     $user->setRole("ROLE_USER");
@@ -101,14 +105,14 @@ class PersonaController extends Controller
                     # Telefono
                     $telefono = new Telefono();
                     $telefono->setPersona($persona);
-                    $telefono->setNumero($form->get("telefono")->get("numero")->getData());
+                    $telefono->setNumero($form->get("numero")->getData());
                     
                     # Cursos
                                        
                     $cursos = new Cursos();
-                    $cursos->setNombreCurso($form->get("cursos")->get("nombreCurso")->getData());
-                    $cursos->setTutor($form->get("cursos")->get("tutor")->getData());
-                    $cursos->setDescripcion($form->get("cursos")->get("descripcion")->getData());
+                    $cursos->setNombreCurso($form->get("nombreCurso")->getData());
+                    $cursos->setTutor($form->get("tutor")->getData());
+                    $cursos->setDescripcion($form->get("descripcion")->getData());
 
                     $perscurs= new PersCurs();
                     $perscurs->setPersona($persona);

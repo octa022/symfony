@@ -5,8 +5,27 @@
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
 		<h2>Personas</h2>
-		{{form_start(form)}}
-		{{form_end(form)}}
+
+{{ form_start(form, {'action':'', 'method':'POST'}) }}
+
+		
+		{{ form_row(form.nombre) }}
+		{{ form_row(form.apellido) }}
+		{{ form_row(form.usuario.user) }}
+		{{ form_row(form.usuario.password) }}
+		{{ form_row(form.telefono.numero) }}
+		{{ form_row(form.cursos.nombreCurso) }}
+		{{ form_row(form.cursos.tutor) }}
+		{{ form_row(form.cursos.descripcion) }}
+		
+
+		{{ form_widget(form.usuario.Guardar, { 'attr': {'disabled': 'disabled', 'class': 'hidden'} }) }}
+		{{ form_widget(form.telefono.Guardar, { 'attr': {'disabled': 'disabled', 'class': 'hidden'} }) }}
+		{{ form_widget(form.cursos.Guardar, { 'attr': {'disabled': 'disabled', 'class': 'hidden'} }) }}
+
+		{{ form_end(form) }}
+		
+		
 	</div>
 
 	<div class="clearfix"></div>
