@@ -11,7 +11,9 @@
 		{% for message in app.session.flashbag().get('status') %}
 			<div class="alert alert-success">{{ message }}</div>
 		{% endfor %}
-		<table class="table table-responsive" style="width:80%">
+		<table id="tabla" class="table table-responsive" style="width:80%">
+
+			<thead>
 			<tr>
 				<th>Curso</th>
 				<th>Tutor</th>
@@ -22,8 +24,9 @@
 				<th>Inscrito</th>
 				
 			</tr>
+			</thead>
+			<tbody>
 			
-
 			{% for curso in cursos %}
 				<tr>
 					<td>{{curso.nombreCurso}}</td>
@@ -46,49 +49,72 @@
 					<a href="{{path("Blog_new_cursos",{"id":curso.id})}}" class="btn btn-success">
           				<span class="glyphicon glyphicon-ok"></span></a>
           			</td>
-
+          			<td>
 					{% for persona in personas %} {% for pc in perscurs %}
 					{% if (persona.id == app.user.id) and (pc.persona == persona)%} 
 					{% if (pc.cursos == curso) %} 
-					<td>
+					
 						<a href="#" class="btn btn-info">
           				<span class="glyphicon glyphicon-ok-sign"></span> </a>
-        			</td>
         			
-        			
-					
-          					
         			
 
           			{% endif %}
         			{% endif %}	
 					{% endfor %} {% endfor %}
-					
+					</td>
 
-
-					
-					
-
-        			
-
-          			
-
-
-
-
-				
-
-        			
-
-        				
 
 				</tr>
 			{% endfor %}
-
-
 			
-			
+			</tbody>
+
 		</table>
+
+		<script>
+			$.extend( true, $.fn.dataTable.defaults, {
+			    "searching": false,
+			    "ordering": false,
+			    "info":   false,
+			    "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
+			} );
+
+			$(document).ready(function() {
+			    $('#tabla').DataTable( {
+
+		    	
+			        dom: 'Bfrtip',
+			        buttons: [
+			            'excelHtml5',
+			            
+			            'pdfHtml5'
+			        ]
+			    } );
+			} );
+
+			$(document).ready(function() {
+			    $('#tabla1').DataTable( {
+			    	"paging":   false,
+			        "ordering": false,
+			        "info":     false,
+			        dom: 'Bfrtip',
+			        buttons: [
+			            'excelHtml5',
+			            'csvHtml5',
+			            'pdfHtml5'
+			        ]
+			    } );
+			} );
+
+			$(document).ready(function() {
+			    $('#tabla11').DataTable( {
+			        "dom": '<"top"i>rt<"bottom"flp><"clear">'
+			    } );
+			} );
+
+		</script>
+
 		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Nuevo Curso</a>
 		<hr/>
 	</div>

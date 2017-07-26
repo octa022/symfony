@@ -11,9 +11,17 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
-        <table class="table table-bordered " style="width:60%" >
+        <table id="tabla" class="table table-striped " style="width:60%" >
 
             <div>
+                <thead>
+                <tr>
+                     <td></td><td></td><td></td>
+                
+                </tr>
+
+                </thead>
+                <tbody>
                 <tr>
                     <th>Nombre</th>
                     <td>{{persona.nombre}} {{persona.apellido}}</td>
@@ -50,8 +58,34 @@
                         <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
                     </td>
                 </tr>
+                </tbody>
+
             </div>      
         </table>
+
+        <script>
+            $.extend( true, $.fn.dataTable.defaults, {
+                "searching": false,
+                "ordering": false,
+                "info":   false,
+                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
+            } );
+
+            $(document).ready(function() {
+                $('#tabla').DataTable( {
+
+                
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excelHtml5',
+                        
+                        'pdfHtml5'
+                    ]
+                } );
+            } );
+        </script>
+
+
        <hr/>
     </div>
     <div class="clearfix"></div>
