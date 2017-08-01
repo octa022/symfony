@@ -1,4 +1,4 @@
-{% extends "AppBundle::layout.html.twig" %}
+{% extends "AppBundle::base.html.twig" %}
 
 {% block title %} Información {% endblock %}
 
@@ -6,7 +6,8 @@
 
     <div class="center-block"  align="center">
 
-        <h2>Información Personal</h2>
+        
+        <h1> Información Personal </h1>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{ message }}</div>
@@ -67,19 +68,28 @@
             $.extend( true, $.fn.dataTable.defaults, {
                 "searching": false,
                 "ordering": false,
-                "info":   false,
-                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
+                "info":   false
+               
             } );
 
             $(document).ready(function() {
                 $('#tabla').DataTable( {
-
-                
-                    dom: 'Bfrtip',
+                    dom: 'tB',
                     buttons: [
-                        'excelHtml5',
-                        
-                        'pdfHtml5'
+                        'excel',
+                        {   
+                        title: "Información Personal",
+                        message: "Datos Generales",
+                        header: true,
+                        extend: 'pdf',
+                        text: 'PDF',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                           
+                        }   
+                        }
                     ]
                 } );
             } );

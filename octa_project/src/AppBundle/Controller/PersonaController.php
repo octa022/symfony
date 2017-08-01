@@ -150,7 +150,7 @@ class PersonaController extends Controller
         ));
     }
 
-    # Borrar
+    # Borrar Falta
     public function deleteAction($id)
     { 
         $em=$this->getDoctrine()->getEntityManager();        

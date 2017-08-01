@@ -20,54 +20,9 @@
 	</head>
 	
 	<body>
-
-		<!--Inicio Carousel-->
-		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-		  <!-- Indicators -->
-		  <ol class="carousel-indicators">
-		    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-		    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-		    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-		  </ol>
-
-		  <!-- Wrapper for slides -->
-		  <div class="carousel-inner" role="listbox">
-		    <div class="item active" style="height: 100vh">
-		      <img src="http://www.symfony.co.za/admin/uploads/image/home/symfony-design-wallpaper-3-1.jpg" alt="...">
-		      <div class="carousel-caption">
-		        <h3>Ideas...!</h3>
-            	<p>-Un pequeño cambio positivo puede cambiar tu día entero o tu vida entera.-Nishant Grover.</p>
-		      </div>
-		    </div>
-		    <div class="item" style="height: 100vh">
-		      <img src="http://searchengineland.com/figz/wp-content/seloads/2016/05/Featured-Image1920x1080-1.jpg" alt="...">
-		      <div class="carousel-caption">
-		        <p style="color:Black">–Somos lo que pensamos. Todo lo que somos surge con nuestros pensamientos. Con nuestros pensamientos construimos el mundo.-Buddha.</p>
-		      </div>
-		    </div>
-		    <div class="item" style="height: 100vh">
-		      <img src="http://skypluss.com/assets/uploads/digitalrocket3/seo.png" alt="Third slide"" alt="...">
-		      <div class="carousel-caption">
-		        <p style="color:Black">–Cualquier cosa que la mente del hombre puede concebir y creer, puede ser conseguida-Napoleon Hill.</p>
-		      </div>
-		    </div>
-		    ...
-		  </div>
-
-		  <!-- Controls -->
-		  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-		    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
-		  </a>
-		</div>
-		<!--Fin Carousel-->
 	
 		<!--Inicio Navbar-->
-		<nav  class="navbar navbar-inverse navbar-fixed-top">
+		<nav  class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
@@ -126,12 +81,10 @@
 		<!--Fin Navbar-->
 			
 		
-		<section class="content" style="height: 100vh">
+		<section class="container">
 						
-			<div class="container jumbotron">
-				{% block content %} Bloque de Contenido {% endblock %}	
-			</div>
-			
+			{% block content %} Bloque de Contenido {% endblock %}
+			<hr>
 			
 		</section>
 

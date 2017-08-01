@@ -1,4 +1,4 @@
-{% extends "AppBundle::layout.html.twig" %}
+{% extends "AppBundle::base.html.twig" %}
 
 {% block title %} Cursos {% endblock %}
 
@@ -76,20 +76,31 @@
 			$.extend( true, $.fn.dataTable.defaults, {
 			    "searching": false,
 			    "ordering": false,
-			    "info":   false,
-			    "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>'
+			    "info":   false
+			    
 			} );
 
 			$(document).ready(function() {
 			    $('#tabla').DataTable( {
-
-		    	
-			        dom: 'Bfrtip',
+	    	
+			        dom: 'tBfrip',
 			        buttons: [
-			            'excelHtml5',
-			            
-			            'pdfHtml5'
-			        ]
+			         	'excel',
+                    	{   
+                        title: "Cursos",
+                        message: "Información de Cursos del Sistema",
+                        header: true,
+                        extend: 'pdf',
+                        text: 'PDF',
+                        exportOptions: {
+                            modifier: {
+                                page: 'current'
+                            },
+                           
+                        }	
+                    	}
+                	]
+
 			    } );
 			} );
 
