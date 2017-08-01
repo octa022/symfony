@@ -14,16 +14,16 @@
 		<table id="tabla" class="table table-responsive" style="width:80%">
 
 			<thead>
-			<tr>
-				<th>Curso</th>
-				<th>Tutor</th>
-				<th>Descripción</th>
-				<th>Editar</th>
-				<th>Borar</th>
-				<th>Agregar</th>
-				<th>Inscrito</th>
-				
-			</tr>
+				<tr>
+					<th>Curso</th>
+					<th>Tutor</th>
+					<th>Descripción</th>
+					<th>Editar</th>
+					<th>Borar</th>
+					<th>Agregar</th>
+					<th>Inscrito</th>
+					
+				</tr>
 			</thead>
 			<tbody>
 			
@@ -55,7 +55,8 @@
 					{% if (pc.cursos == curso) %} 
 					
 						<a href="#" class="btn btn-info">
-          				<span class="glyphicon glyphicon-ok-sign"></span> </a>
+          				<span class="glyphicon glyphicon-ok-sign"> si</span> 
+          				</a>
         			
         			
 
@@ -87,42 +88,26 @@
 			        buttons: [
 			         	'excel',
                     	{   
+                    	download: 'open',
                         title: "Cursos",
                         message: "Información de Cursos del Sistema",
                         header: true,
                         extend: 'pdf',
                         text: 'PDF',
-                        exportOptions: {
-                            modifier: {
-                                page: 'current'
-                            },
-                           
-                        }	
-                    	}
+
+                        pageSize: 'LETTER',
+							
+						exportOptions: {
+
+                            columns: [0,1,2,6]
+                           }	
+                    	},
+                    	
                 	]
 
 			    } );
 			} );
 
-			$(document).ready(function() {
-			    $('#tabla1').DataTable( {
-			    	"paging":   false,
-			        "ordering": false,
-			        "info":     false,
-			        dom: 'Bfrtip',
-			        buttons: [
-			            'excelHtml5',
-			            'csvHtml5',
-			            'pdfHtml5'
-			        ]
-			    } );
-			} );
-
-			$(document).ready(function() {
-			    $('#tabla11').DataTable( {
-			        "dom": '<"top"i>rt<"bottom"flp><"clear">'
-			    } );
-			} );
 
 		</script>
 

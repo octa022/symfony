@@ -6,7 +6,6 @@
 
     <div class="center-block"  align="center">
 
-        
         <h1> Información Personal </h1>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
@@ -14,15 +13,15 @@
         {% endfor %}
         <table id="tabla" class="table table-striped " style="width:60%" >
 
-            <div>
-                <thead>
+            
+            <thead>
                 <tr>
                      <td></td><td></td><td></td>
                 
                 </tr>
+            </thead>
 
-                </thead>
-                <tbody>
+            <tbody>
                 <tr>
                     <th>Nombre</th>
                     <td>{{persona.nombre}} {{persona.apellido}}</td>
@@ -59,9 +58,9 @@
                         <span class="glyphicon glyphicon glyphicon-pencil"></span> </a>     
                     </td>
                 </tr>
-                </tbody>
+            </tbody>
 
-            </div>      
+                 
         </table>
 
         <script>
@@ -74,7 +73,7 @@
 
             $(document).ready(function() {
                 $('#tabla').DataTable( {
-                    dom: 'tB',
+                    dom: 'tBfrip',
                     buttons: [
                         'excel',
                         {   
@@ -83,6 +82,7 @@
                         header: true,
                         extend: 'pdf',
                         text: 'PDF',
+                        pageSize: 'LETTER',
                         exportOptions: {
                             modifier: {
                                 page: 'current'
