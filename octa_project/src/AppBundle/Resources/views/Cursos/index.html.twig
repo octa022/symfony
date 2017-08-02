@@ -18,10 +18,12 @@
 					<th>Curso</th>
 					<th>Tutor</th>
 					<th>Descripción</th>
+					{% if app.user != null %}	
 					<th>Editar</th>
 					<th>Borar</th>
 					<th>Agregar</th>
 					<th>Inscrito</th>
+					{% endif %}	
 					
 				</tr>
 			</thead>
@@ -32,6 +34,7 @@
 					<td>{{curso.nombreCurso}}</td>
 					<td>{{curso.tutor}}</td>
 					<td>{{curso.descripcion}}</td>
+				{% if app.user != null %}
 					<td>
 						<a href="{{path("Blog_edit_cursos",{"id":curso.id})}}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> </a> 	
 					</td>
@@ -42,28 +45,25 @@
         				{% else %}
         					Creado por otro usuario
         				{% endif %}
-						 	
 					</td>
-
 					<td>
-					<a href="{{path("Blog_new_cursos",{"id":curso.id})}}" class="btn btn-success">
+						<a href="{{path("Blog_new_cursos",{"id":curso.id})}}" class="btn btn-success">
           				<span class="glyphicon glyphicon-ok"></span></a>
           			</td>
           			<td>
-					{% for persona in personas %} {% for pc in perscurs %}
-					{% if (persona.id == app.user.id) and (pc.persona == persona)%} 
-					{% if (pc.cursos == curso) %} 
-					
-						<a href="#" class="btn btn-info">
-          				<span class="glyphicon glyphicon-ok-sign"> si</span> 
-          				</a>
-        			
-        			
-
-          			{% endif %}
-        			{% endif %}	
-					{% endfor %} {% endfor %}
+						{% for persona in personas %} {% for pc in perscurs %}
+						{% if (persona.id == app.user.id) and (pc.persona == persona) and (pc.cursos == curso)%} 
+						{% if (pc.cursos == curso) %} 
+						
+							<a class="btn btn-info">
+	          					<span class="glyphicon glyphicon-ok-sign"> si</span> 
+	          				</a>
+	        			
+	          			{% endif %}
+	        			{% endif %}	
+						{% endfor %} {% endfor %}
 					</td>
+				{% endif %}
 
 
 				</tr>
@@ -72,6 +72,7 @@
 			</tbody>
 
 		</table>
+
 
 		<script>
 			$.extend( true, $.fn.dataTable.defaults, {
@@ -90,17 +91,20 @@
                     	{   
                     	download: 'open',
                         title: "Cursos",
-                        message: "Información de Cursos del Sistema",
                         header: true,
                         extend: 'pdf',
                         text: 'PDF',
-
                         pageSize: 'LETTER',
 							
-						exportOptions: {
+                        {% if app.user != null %}
+	                        message: 'Lista de cursos inscritos pertenecientes a {{personas[app.user.id-1].nombre}} {{personas[app.user.id-1].apellido}}',
+	                                               
+							exportOptions: { columns: [0,1,2,6] }
 
-                            columns: [0,1,2,6]
-                           }	
+						{% else %}
+							message: 'Lista de Cursos Disponibles',
+
+                        {% endif %}	
                     	},
                     	
                 	]
@@ -108,10 +112,10 @@
 			    } );
 			} );
 
-
 		</script>
-
-		<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Nuevo Curso</a>
+			{% if app.user != null %}
+				<a href="{{path("Blog_add_cursos")}}" class="btn btn-success">Agregar Nuevo Curso</a>
+			{% endif %}
 		<hr/>
 	</div>
 
@@ -120,3 +124,4 @@
 
 
 {% endblock %}
+

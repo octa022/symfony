@@ -42,6 +42,8 @@
 		      	{% block menu %}
 		      	{% if app.user != null %}	
 		      	<li><a href="{{path("Blog_index_persona")}}">Información<span class="sr-only">(current)</span></a></li>
+		      	{% else %}
+		      	<li><a href="{{path("Blog_index_cursos")}}">Cursos Disponibles</a></li> -->
 		      	{% endif %}
 		    <!--    <li><a href="#">Link</a></li>  class="active"-->
 		        {% endblock %}
