@@ -17,4 +17,10 @@ class DefaultController extends Controller
         return $this->render('AppBundle:Default:index.html.twig');
       
     }
+    public function ayudaAction()
+    {
+       
+        return $this->render('AppBundle:Default:ayuda.html.twig');
+      
+    }
 }

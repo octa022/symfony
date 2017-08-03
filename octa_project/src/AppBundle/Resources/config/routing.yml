@@ -70,3 +70,7 @@ Blog_edit_persona:
 Blog_new_cursos:
     path: /cursos/new/{id}
     defaults: { _controller: AppBundle:Cursos:new }
+
+Blog_ayuda:
+    path: /ayuda
+    defaults: { _controller: AppBundle:Default:ayuda }
